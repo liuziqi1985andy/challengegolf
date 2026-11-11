@@ -10,6 +10,12 @@ NAV = [("index.html", "Home"), ("about.html", "About"), ("programs.html", "Progr
 LOGO = "img/logo.jpg"
 EMAIL = "info@challengegolf.ca"
 CHARITY = "88986-6570-RR0001"
+FB = "https://www.facebook.com/challengegolf"
+LI = "https://www.linkedin.com/company/challengegolf"
+IG = "https://www.instagram.com/challengegolf1992"
+SOCIAL = f'<a href="{FB}" target="_blank" rel="noopener">Facebook @challengegolf</a><a href="{LI}" target="_blank" rel="noopener">LinkedIn @challengegolf</a><a href="{IG}" target="_blank" rel="noopener">Instagram @challengegolf1992</a>'
+BIRDIES = "Birdies Indoor Golf Oakville<br>504 Iroquois Shore Rd, Unit 8, Oakville, ON L6H 3K4"
+BIRDIES_MAP = "https://maps.google.com/?q=Birdies+Indoor+Golf+504+Iroquois+Shore+Rd+Unit+8+Oakville+ON+L6H+3K4"
 
 PHOTOS = {  # caption -> (file in img/photos/, focal point)
     "participants on the range": ("hero-friends", "50% 35%"),
@@ -67,7 +73,7 @@ FOOTER = f'''<footer><div class="wrap"><div class="cols">
 <p style="margin-top:14px;max-width:320px">Golf for the Physically Challenged. A registered Canadian charity, run entirely by volunteers in Oakville, Ontario since 1992.</p></div>
 <div><h5>Explore</h5><a href="index.html">Home</a><a href="about.html">About Us</a><a href="programs.html">Programs</a><a href="events.html">Events</a><a href="gallery.html">Gallery</a></div>
 <div><h5>Get involved</h5><a href="support.html#donate">Donate</a><a href="support.html#volunteer">Volunteer</a><a href="support.html#sponsor">Sponsor</a><a href="cg35.html">CG35 Gala</a></div>
-<div><h5>Contact</h5><a href="mailto:{EMAIL}">{EMAIL}</a><a>Facebook</a><a>Instagram @challengegolf1992</a><a>LinkedIn</a></div>
+<div><h5>Contact</h5><a href="mailto:{EMAIL}">{EMAIL}</a>{SOCIAL}</div>
 </div><div class="legal"><span>© 2026 Challenge Golf · Golf for the Physically Challenged</span><span>Charity registration number {CHARITY}</span></div></div></footer>'''
 
 VIDEO_JS = r"""<script>
@@ -105,10 +111,10 @@ page("index.html", "Challenge Golf | Golf for the Physically Challenged, Oakvill
 <p>Challenge Golf helps people living with neurological, physical and developmental limitations enjoy a more active, fulfilling life through golf. Free weekly programs, run entirely by volunteers since 1992.</p>
 <div class="btns"><a class="btn btn-red" href="programs.html">Join a program</a><a class="btn btn-ghost" href="support.html">Support us</a></div></div>
 <div class="ring"><div class="ph"><img src="img/photos/group-teezone.jpg" alt="Challenge Golf members waving at Tee Zone"></div><div class="s"><img src="{LOGO}" alt="Challenge Golf 35 Years: Believe and Achieve"></div></div></div>''',
-     f'''<div class="wrap"><div class="stats"><div><b>Since 1992</b><span>adaptive golf in Oakville</span></div><div><b>100%</b><span>volunteer-run</span></div>
-<div><b>No fees</b><span>for participants</span></div><div><b>Year-round</b><span>summer range & winter indoor</span></div></div></div>
+     f'''<div class="wrap"><div class="stats"><div><b>Since 1992</b><span>registered Canadian charity</span></div><div><b>100%</b><span>volunteer-run</span></div>
+<div><b>Free program</b><span>for participants</span></div><div><b>Year-round</b><span>summer range & winter indoor</span></div><div><b>More than golf</b><span>building a supportive and encouraging community</span></div></div></div>
 
-<section><div class="wrap split"><div><span class="sec-k">Our mission</span><h2>More than a game</h2>
+<section id="mission"><div class="wrap split"><div><span class="sec-k">Our mission</span><h2>More than a game</h2>
 <div class="prose"><p>Our mission is to empower community members facing physical limitations, aiding them in their journey towards a more active and fulfilling life, both physically and mentally.</p>
 <p>We expand opportunities for fellowship by providing a dedicated space, equipment and guidance. Our volunteers offer advice, tuition and encouragement so every participant can play the game to the fullest extent of their abilities.</p></div>
 <div class="btns" style="margin-top:24px"><a class="btn btn-green" href="about.html">Our story</a></div></div>
@@ -139,10 +145,10 @@ board = ["Andy Liu", "Danny Foran", "Jason Vale", "Anne Lamont", "Andy Westcott"
 page("about.html", "About Us | Challenge Golf", "Our mission, history and board of directors.",
      phero("About us", "Our story", "Golf for the Physically Challenged, also known as Challenge Golf, is a registered Canadian charity based in Oakville, Ontario."),
      f'''<section><div class="wrap split"><div class="rounded" style="height:440px">{photo("volunteers with participants", "a1")}</div>
-<div><span class="sec-k">Our mission</span><h2>Empowering active, fulfilling lives</h2><div class="prose">
-<p>Our mission is to empower community members facing physical limitations, aiding them in their journey towards a more active and fulfilling life, both physically and mentally.</p>
-<p>We strive to expand opportunities for fellowship by providing a dedicated space, necessary equipment, and guidance.</p>
-<p>Our team of volunteers is committed to offering advice, tuition, and encouragement, enabling participants to learn and play the game of golf to the fullest extent of their abilities.</p></div></div></div></section>
+<div><span class="sec-k">Who we are</span><h2>A community built around golf</h2><div class="prose">
+<p>For more than three decades, Challenge Golf has brought people living with neurological, physical and developmental limitations together with volunteers who love the game.</p>
+<p>We are 100% volunteer-run, and our programs are free for participants. Week after week, what keeps people coming back is the friendship, encouragement and sense of belonging as much as the golf.</p></div>
+<div class="btns" style="margin-top:22px"><a class="btn btn-green" href="index.html#mission">Read our mission</a></div></div></div></section>
 
 <section class="white"><div class="wrap split top-align"><div><span class="sec-k">History</span><h2>Our journey</h2>
 <p class="lead">From a driving range in 1990 to a year-round program today. We're grateful to everyone who has contributed along the way. Together, let's keep making our community an even better place.</p></div>
@@ -172,18 +178,20 @@ def pcard(id_, title, chip, text, facts, label, sky):
     f = "".join(f"<div><em>{k}</em><span>{v}</span></div>" for k, v in facts)
     return f'''<div class="pcard" id="{id_}">{photo(label, id_, sky=sky)}<div class="body"><span class="chip">{chip}</span>
 <h3 style="margin-top:12px">{title}</h3><p style="color:var(--muted);margin-top:8px">{text}</p><div class="facts">{f}</div>
-<div class="btns"><a class="btn btn-red" href="contact.html">Register interest</a></div></div></div>'''
+<div class="btns"><a class="btn btn-red" href="contact.html">Arrange a visit</a></div></div></div>'''
 
-page("programs.html", "Programs | Challenge Golf", "Summer, winter and caregiver support programs.",
-     phero("Programs", "Play all year", "There are no fees to participate. Donations are gratefully accepted when they're within a participant's means."),
+page("programs.html", "Programs | Challenge Golf", "Summer, winter, tournaments and caregiver support programs.",
+     phero("Programs", "Play all year", "Our weekly programs are free for participants. New participants and volunteers are always welcome to visit a session before deciding to join."),
      f'''<section><div class="wrap">
 {pcard("summer","Summer Program","May – early October","Weekly sessions on the driving range and golf course, tailored for people with physical limitations. Volunteers and our golf cart help participants get from the parking lot to our reserved tees.",
  [("When","Mondays, 1:00–2:30 pm (except statutory holidays)"),("Season","Early May to the start of October"),("Where","Tee Zone Driving Range, 4105 Bronte Rd (north of Hwy 407), Oakville"),("Cost","Free")],"summer program at Tee Zone","#e4f2d0")}
 {pcard("winter","Winter Program","January – spring","Keep your swing going through the winter on indoor golf simulators, in a warm, relaxed setting with the same friendly volunteers.",
- [("When","Mondays, 1–3 pm"),("Starts","January 11, 2027"),("Where","Birdies Indoor Golf, Oakville"),("Cost","Free")],"winter program indoors","#e2f0f4")}
+ [("When","Mondays, 1–3 pm"),("Starts","January 11, 2027"),("Where",BIRDIES),("Cost","Free")],"winter program indoors","#e2f0f4")}
+{pcard("tournaments","Golf Tournaments","Twice a season","Two tournaments a year at Granite Ridge Golf Club, a chance to get out on the course and enjoy a full day of golf. Each participant is paired with a volunteer.",
+ [("Where","Granite Ridge Golf Club"),("How often","Two tournaments each season"),("Format","Each participant is paired with a volunteer"),("Cost","Subsidized fee")],"golf tournament at Granite Ridge","#e2f0f4")}
 {pcard("caregivers","Beyond Caregiving","New in 2026","A support group for caregivers. Several participants told us their caregivers were struggling, and that affects whether they can take part. This group gives caregivers time, support and community of their own.",
  [("When","One 2-hour session a month, Thursdays"),("Where","St. Paul's United Church, Oakville"),("Led by","A professional facilitator"),("Cost","Free")],"caregiver group","#fde9e4")}
-<div class="banner green" style="margin-top:40px"><span class="seal"><img src="{LOGO}" alt=""></span><div><h3>Registration</h3><p>Spaces are limited. Registration forms go to participants each season, so contact us to be added to the list.</p></div><a class="btn" href="contact.html">Contact us</a></div>
+<div class="banner green" style="margin-top:40px"><span class="seal"><img src="{LOGO}" alt=""></span><div><h3>Come and visit us first</h3><p>We encourage all new participants and volunteers to come out and visit a session before deciding to join. Spaces are limited, and registration forms are sent out each season, so contact us to arrange a visit.</p></div><a class="btn" href="contact.html">Contact us</a></div>
 </div></section>
 
 <section class="white"><div class="wrap split"><div><span class="sec-k">What to expect</span><h2>Your first session</h2>
@@ -192,8 +200,8 @@ page("programs.html", "Programs | Challenge Golf", "Summer, winter and caregiver
 
 # ------------------------------------------------------------------ EVENTS
 def erow(id_, mon, day, sub, title, text, chip, label, sky="#e4f2d0"):
-    return f'''<div class="erow" id="{id_}"><div class="date"><small>{mon}</small><b>{day}</b><span>{sub}</span></div>
-<div><span class="chip{' red' if 'TBA' in chip or 'Save' in chip else ''}">{chip}</span><h3 style="margin-top:8px">{title}</h3><p>{text}</p></div>{photo(label, id_, h="170px", sky=sky)}</div>'''
+    return f'''<div class="erow nophoto" id="{id_}"><div class="date"><small>{mon}</small><b>{day}</b><span>{sub}</span></div>
+<div><span class="chip{' red' if 'TBA' in chip or 'Save' in chip else ''}">{chip}</span><h3 style="margin-top:8px">{title}</h3><p>{text}</p></div></div>'''
 
 page("events.html", "Events | Challenge Golf", "Tournaments, BBQ, Christmas Luncheon and more.",
      phero("Events", "Golf, food & friendship", "Our events bring participants, families, volunteers and supporters together all year round."),
@@ -205,7 +213,7 @@ page("events.html", "Events | Challenge Golf", "Tournaments, BBQ, Christmas Lunc
 {erow("tournaments","AUG","TBA","2027","Golf Tournaments","Hosted by Granite Ridge Golf Club for four consecutive years. In 2026 we played Monday, August 24 and Monday, October 19, with a 10:00 am tee-off.","Dates TBA","golf tournament at Granite Ridge","#e2f0f4")}
 {erow("volunteers","TBA","★","","Volunteer Appreciation","A thank-you celebration for the volunteers who make every session possible.","Date TBA","volunteer appreciation","#eef6dc")}
 </div></section>
-<section class="white"><div class="wrap center"><h2>Photos from past events</h2><p class="lead">Tournaments, BBQs and luncheons through the years.</p><div class="grid4">{photo("past tournament","pe1",h="200px")}{photo("past bbq","pe2",h="200px")}{photo("past christmas","pe3",h="200px")}{photo("past cruise","pe4",h="200px")}</div><a class="btn btn-green" style="margin-top:22px" href="gallery.html">Visit the gallery</a></div></section>''')
+<section class="white"><div class="wrap center"><h2>See our past events</h2><p class="lead">Photos and videos from tournaments, BBQs and luncheons through the years.</p><a class="btn btn-green" style="margin-top:18px" href="gallery.html">Visit the gallery</a></div></section>''')
 
 # ------------------------------------------------------------------ CG35
 page("cg35.html", "CG35 Gala | Challenge Golf 35th Anniversary", "Celebrate 35 years of Challenge Golf on April 17, 2027.",
@@ -216,38 +224,50 @@ page("cg35.html", "CG35 Gala | Challenge Golf 35th Anniversary", "Celebrate 35 y
      f'''<section><div class="wrap split top-align"><div><span class="sec-k">The celebration</span><h2>Thirty-five years of believing and achieving</h2><div class="prose">
 <p>Since 1992, Challenge Golf has helped people living with physical challenges enjoy the game. On April 17, 2027 we're celebrating with the participants, families, volunteers and supporters who made it happen.</p>
 <p>Join us for an afternoon and evening of stories, celebration and community, and help us raise funds for the next 35 years.</p></div>
-<p style="margin-top:14px"><span class="note">Add the program: dinner, speakers, activities, auction…</span></p></div>
+<h3 style="font-family:var(--serif);font-size:24px;font-weight:400;text-transform:uppercase;margin-top:26px;color:var(--green-d)">The evening</h3>
+<ul class="ticks"><li>An exhibition of Challenge Golf's history, with stories from our participants and work by local artists</li><li>A performance by musicians from the Oakville Symphony Orchestra</li><li>Speeches from board members, participants and local leaders</li><li>The first-ever Richard Malinski Award</li></ul></div>
 <div class="ticket" id="tickets"><h3 style="font-family:var(--serif);font-size:28px;font-weight:400;text-transform:uppercase;margin-bottom:10px">Event details</h3>
 <div class="row"><span>Date</span><b>Saturday, April 17, 2027</b></div><div class="row"><span>Time</span><b>2:00 – 9:00 pm</b></div>
 <div class="row"><span>Venue</span><b>Oakville Conference Centre</b></div><div class="row"><span>Tickets</span><b>On sale now</b></div>
 <a class="btn btn-red" href="https://ocf.fcsuite.com/erp/donate/list/event?event_date_id=2274" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:18px">Buy tickets</a></div></div></section>
 
-<section class="white" id="sponsor"><div class="wrap"><span class="sec-k">Sponsorship</span><h2>Sponsor CG35</h2><p class="lead">Put your organization in front of our community and help keep adaptive golf free for everyone.</p>
-<div class="tiers" style="margin-top:30px">
-<div class="tier"><b>Friend</b><p>Benefits package coming soon</p></div><div class="tier"><b>Silver</b><p>Benefits package coming soon</p></div><div class="tier"><b>Gold</b><p>Benefits package coming soon</p></div><div class="tier"><b>Presenting</b><p>Benefits package coming soon</p></div></div>
-<div class="btns" style="margin-top:28px"><a class="btn btn-red" href="contact.html">Enquire about sponsorship</a></div></div></section>
+<section class="white" id="sponsor"><div class="wrap"><span class="sec-k">Sponsorship</span><h2>Sponsor CG35</h2><p class="lead">Help us celebrate 35 years of changing lives through golf. Your sponsorship also helps cover costs for participants facing financial difficulties, so cost never becomes a barrier to taking part.</p>
+<div class="tiers t5" style="margin-top:30px">
+<div class="tier"><small>Gold · 1 available</small><b>Performance</b><em>$8,000</em><p>On-stage mention, prominent logo display, 8 tickets</p></div>
+<div class="tier"><small>Silver · 1 available</small><b>Exhibition</b><em>$5,000</em><p>Logo throughout the exhibition area, 4 tickets</p></div>
+<div class="tier"><small>Bronze · 1 available</small><b>Reception</b><em>$3,000</em><p>Logo at the reception area, 2 tickets</p></div>
+<div class="tier"><small>Table</small><b>Table</b><em>$1,000</em><p>Logo on a table centrepiece, 2 tickets</p></div>
+<div class="tier"><small>Community</small><b>Supporter</b><em>$500</em><p>Recognition on our website and social media</p></div></div>
+<p style="color:var(--muted);margin-top:20px">All sponsors are recognized on our website and social media. We're happy to work with you to shape a sponsorship that fits your organization.</p>
+<div class="btns" style="margin-top:22px"><a class="btn btn-red" href="contact.html">Enquire about sponsorship</a><a class="btn btn-green" href="mailto:{EMAIL}?subject=CG35%20sponsorship">Email {EMAIL}</a></div></div></section>
 
 <section><div class="wrap"><span class="sec-k">35 years in pictures</span><h2>Our community today</h2>
 <div class="grid3">{photo("indoor swing","c1",h="280px")}{photo("bbq friends","c2",h="280px")}{photo("community social","c3",h="280px")}</div></div></section>''')
 
 # ------------------------------------------------------------------ GALLERY
+GALLERY = ['bbq-overview', 'bbq-table', 'boat-group', 'boat-help', 'boat-wave', 'caregiver-chat', 'cart-friends', 'christmas-friends', 'christmas-room', 'civitan-cheque', 'coaching-arm', 'flag-friends', 'group-lanai', 'group-teezone', 'hero-friends', 'high-five', 'hug', 'indoor-group', 'maple-lodge', 'opening-day', 'patio-friends', 'putting-brace', 'range-laughs', 'range-powerchair', 'range-smiles', 'summer-patio2', 'swing-follow', 'team-friends', 'teezone-patio', 'tournament-adaptive', 'tournament-colour', 'tournament-peace', 'volunteers-gazebo', 'winter-coaching', 'winter-lounge', 'winter-ramp', 'winter-stool', 'winter-team', 'winter-volunteers']
 albums = [("Summer Program", "Mondays at Tee Zone", "#e4f2d0"), ("Golf Tournaments", "Granite Ridge, 2023–2025", "#e2f0f4"),
           ("Annual BBQ", "Thanks to Maple Lodge Farms", "#fde9e4"), ("Christmas Luncheon album", "Festive gatherings", "#fde9e4"),
           ("Winter Program", "Indoor simulators", "#e2f0f4"), ("Volunteer Appreciation", "Thank-you cruise, 2026", "#eef6dc")]
 page("gallery.html", "Gallery | Challenge Golf", "Photos and videos from Challenge Golf programs and events.",
      phero("Gallery", "Moments on the course", "Photos and videos from our programs, tournaments and celebrations."),
-     f'''<section><div class="wrap"><div class="grid2"><a class="video" href="https://www.youtube.com/watch?v=BDqtwIrgS60" data-yt="BDqtwIrgS60" aria-label="Play video: Challenge Golf: our story"><img src="img/photos/winter-lounge.jpg" alt="Members together at Birdies Indoor Golf"><span class="play" aria-hidden="true">▶</span><span class="cap">Challenge Golf: our story</span></a>
-<a class="video" href="https://www.youtube.com/watch?v=tVcAj_22jJY" data-yt="tVcAj_22jJY" aria-label="Play video: Summer Program highlights"><img src="img/photos/summer-patio2.jpg" alt="Members on the Tee Zone patio"><span class="play" aria-hidden="true">▶</span><span class="cap">Summer Program highlights</span></a></div></div></section>
-<section style="padding-top:0"><div class="wrap"><h2>Albums</h2><div class="albums">
-{''.join(f'<div class="album">{photo(t, "al"+str(i), sky=s)}<div class="b"><h3>{t.replace(" album","")}</h3><span>{d}</span></div></div>' for i,(t,d,s) in enumerate(albums))}
-</div></div></section>''')
+     f'''<section><div class="wrap"><span class="sec-k">In the news</span><h2>Challenge Golf on video</h2><div class="grid2">
+<div class="vid"><a class="video" href="https://youtu.be/fzcwRyUzTF8" data-yt="fzcwRyUzTF8" aria-label="Play video: YourTV feature on Challenge Golf"><img src="img/photos/range-laughs.jpg" alt="Participants laughing on the range"><span class="play" aria-hidden="true">▶</span><span class="cap">YourTV (Cogeco)</span></a>
+<h3>YourTV visits Challenge Golf</h3><p>YourTV, Cogeco's community channel, spent a day with our participants and volunteers to share how golf builds confidence, friendship and community.</p></div>
+<div class="vid"><a class="video" href="https://youtu.be/tVcAj_22jJY" data-yt="tVcAj_22jJY" aria-label="Play video: The Hamilton Spectator on Challenge Golf"><img src="img/photos/summer-patio2.jpg" alt="Members on the Tee Zone patio"><span class="play" aria-hidden="true">▶</span><span class="cap">The Hamilton Spectator</span></a>
+<h3>The Hamilton Spectator</h3><p>The Hamilton Spectator's video story on Challenge Golf and the people who make our program what it is.</p></div>
+</div></div></section>
+<section style="padding-top:0"><div class="wrap"><span class="sec-k">Photos</span><h2>Our community in pictures</h2>
+<div class="pgrid">{''.join(f'<a href="img/photos/{f}.jpg" target="_blank" rel="noopener"><img src="img/photos/{f}.jpg" alt="Challenge Golf photo" loading="lazy"></a>' for f in GALLERY)}</div>
+<p style="color:var(--muted);margin-top:18px">Have photos from a Challenge Golf event? Send them to <a href="mailto:{EMAIL}" style="color:var(--red);font-weight:700">{EMAIL}</a>.</p></div></section>''')
 
 # ------------------------------------------------------------------ SUPPORT US
 sponsors = [("tee-zone", "Tee Zone Driving Range"), ("granite-ridge", "Granite Ridge Golf Club"), ("civitan-oakville", "Civitan Club of Oakville"),
             ("paragolf-ontario", "Paragolf Ontario"), ("golf-journalists", "Golf Journalists Association of Canada"),
             ("golf-canada-foundation", "Golf Canada Foundation"), ("enbridge", "Enbridge Fueling Futures"),
             ("mind-forward", "Mind Forward Brain Injury Services"), ("passion-for-parkinsons", "Passion for Parkinson's Foundation"),
-            ("oakville-strokers", "Oakville Strokers")]
+            ("oakville-strokers", "Oakville Strokers"), ("maple-lodge-farms", "Maple Lodge Farms"),
+            ("oakville-community-foundation", "Oakville Community Foundation"), ("canadian-women-sport", "Canadian Women & Sport")]
 icon = lambda p: f'<span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#25502a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{p}</svg></span>'
 page("support.html", "Support Us | Challenge Golf", "Donate, volunteer, sponsor or donate golf equipment.",
      phero("Support us", "Help every golfer swing", "Challenge Golf is run entirely by volunteers, so every donation goes directly to our programs."),
@@ -259,18 +279,19 @@ page("support.html", "Support Us | Challenge Golf", "Donate, volunteer, sponsor 
 </div></div></section>
 
 <section class="white" id="donate"><div class="wrap split top-align"><div><span class="sec-k">Donate</span><h2>Why donate?</h2>
-<p class="lead">Your generosity fuels the growth of Challenge Golf and ensures people of all abilities continue to experience the joy and empowerment that golf brings.</p>
-<div class="why" style="grid-template-columns:1fr"><div><b>Empower lives</b><span>Your donation directly supports programs that empower people of all abilities through golf.</span></div>
-<div><b>Foster inclusivity</b><span>Everyone, regardless of ability, belongs on the driving range and golf course.</span></div>
-<div><b>Make a lasting impact</b><span>Your gift helps us reach more people and introduce new programs.</span></div></div></div>
+<p class="lead">Your generosity helps people of all abilities continue to experience the joy and empowerment that golf brings. Your donation helps us:</p>
+<div class="why" style="grid-template-columns:1fr"><div><b>Keep our programs free</b><span>No fees for participants in our weekly programs.</span></div>
+<div><b>Buy adaptive equipment</b><span>Clubs and equipment suited to each participant's abilities.</span></div>
+<div><b>Remove cost as a barrier</b><span>Subsidize or cover tournament and social event costs for participants facing financial difficulties.</span></div>
+<div><b>Stay 100% volunteer-run</b><span>Cover the costs of operating as a charity run entirely by volunteers.</span></div></div></div>
 <div class="ticket"><h3 style="font-family:var(--serif);font-size:28px;font-weight:400;text-transform:uppercase">Make a donation</h3>
 <p style="color:var(--muted);margin:8px 0 18px">Challenge Golf is a registered Canadian charity ({CHARITY}). Immediate tax receipts are available.</p>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">{''.join(f'<span style="border:2px solid {"#25502a;background:#25502a;color:#fff" if a=="$100" else "#e2e9dc"};border-radius:10px;text-align:center;padding:12px 0;font-weight:700">{a}</span>' for a in ["$25","$50","$100","Other"])}</div>
-<a class="btn btn-red" style="display:block;text-align:center">Donate securely</a><p style="font-size:13.5px;color:var(--muted);margin-top:12px;text-align:center">Opens our secure donation page</p></div></div></section>
+<a class="btn btn-red" style="display:block;text-align:center" href="https://www.canadahelps.org/en/dn/92488" target="_blank" rel="noopener">Donate through CanadaHelps</a>
+<a class="btn btn-green" style="display:block;text-align:center;margin-top:12px" href="https://www.zeffy.com/en-CA/donation-form/donate-to-help-empower-the-lives-of-people-living-with-physical-limitations-through-golf" target="_blank" rel="noopener">Donate through Zeffy</a>
+<p style="font-size:13.5px;color:var(--muted);margin-top:12px;text-align:center">Both open a secure donation page in a new tab</p></div></div></section>
 
 <section id="volunteer"><div class="wrap split"><div class="rounded" style="height:420px">{photo("volunteers at Tee Zone", "v1")}</div>
-<div><span class="sec-k">Volunteer</span><h2>Be part of the team</h2><p class="lead">Volunteers create a friendly, safe environment. Chatting with participants and helping with equipment is at the heart of it.</p>
-<ul class="ticks"><li>Set up the Challenge Golf section and semi-automated tees at Tee Zone</li><li>Keep tees stocked with golf balls and hand out clubs</li><li>Bring water to participants</li><li>Drive participants from the parking lot to our tees by golf cart</li></ul>
+<div><span class="sec-k">Volunteer</span><h2>Be part of the team</h2><p class="lead">Volunteers create a friendly, safe and encouraging environment for our participants. No golf expertise is needed, just a willingness to help and get to know people.</p>
 <div class="btns"><a class="btn btn-red" href="contact.html">I'd like to volunteer</a></div>
 <p style="color:var(--muted);font-size:15px;margin-top:12px">Or drop by and say hello at a Monday session.</p></div></div></section>
 
@@ -278,23 +299,27 @@ page("support.html", "Support Us | Challenge Golf", "Donate, volunteer, sponsor 
 <p class="lead">We welcome new or gently used golf clubs, balls, bags, grips and other accessories. At the moment we can only accept donations in and around the Halton and Peel regions.</p>
 <div class="btns" style="margin-top:24px"><a class="btn btn-green" href="contact.html">Arrange a drop-off</a></div></div>
 <div id="sponsor" class="card r" style="padding:36px"><span class="sec-k">Sponsor</span><h3 style="font-family:var(--serif);font-size:30px;font-weight:400;text-transform:uppercase;margin-top:6px">Partner with us</h3>
-<p>Support our tournaments, BBQ, Christmas Luncheon or the CG35 celebration, and be recognized on our website and at events.</p><a class="btn btn-red" href="contact.html">Sponsorship enquiries</a></div></div></section>
+<p>Support our tournaments, BBQ, Christmas Luncheon or the CG35 celebration, and be recognized on our website, on our social media and at events.</p><a class="btn btn-red" href="contact.html">Sponsorship enquiries</a></div></div></section>
 
-<section id="supporters"><div class="wrap center"><span class="sec-k">Thank you</span><h2>Our supporters</h2><p class="lead">Our recent supporters have included:</p><div class="thanks">{photo("civitan","cv1",h="320px")}<p>Thank you to the Civitan Club of Oakville and every organization that helps keep Challenge Golf free for participants.</p></div>
-<div class="logos" style="margin-top:30px">{''.join(f'<div><img src="img/sponsors/{s}.png" alt="{n}"></div>' for s,n in sponsors)}<div class="txt">Maple Lodge Farms</div><div class="txt">Oakville Community Foundation</div></div></div></section>''')
+<section id="supporters"><div class="wrap center"><span class="sec-k">Thank you</span><h2>Our supporters</h2><p class="lead">Thank you to every organization that helps keep Challenge Golf free for participants. Our recent supporters have included:</p>
+<div class="logos" style="margin-top:30px">{''.join(f'<div><img src="img/sponsors/{s}.png" alt="{n}" title="{n}"></div>' for s,n in sponsors)}</div></div></section>''')
 
 # ------------------------------------------------------------------ CONTACT
-page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge Golf.",
+page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge Golf. Email info@challengegolf.ca.",
      phero("Contact", "We'd love to hear from you", "Questions about programs, volunteering, sponsorship or donations? Send us a message."),
      f'''<section><div class="wrap split top-align"><div>
 <div class="info"><div><small>Email</small><a href="mailto:{EMAIL}">{EMAIL}</a></div>
 <div><small>Summer program location</small>Tee Zone Driving Range<br>4105 Bronte Road (north of Hwy 407), Oakville, ON</div>
-<div><small>Winter program location</small>Birdies Indoor Golf, Oakville</div>
-<div><small>Follow us</small>Facebook · Instagram @challengegolf1992 · LinkedIn</div></div>
+<div><small>Winter program location</small>{BIRDIES}<br><a href="{BIRDIES_MAP}" target="_blank" rel="noopener" style="color:var(--red);font-weight:700">Get directions to Birdies →</a></div>
+<div class="soc"><small>Follow us</small>{SOCIAL}</div></div>
 <div class="map" style="margin-top:26px">{photo("summer patio","m1")}<a class="btn btn-red maplink" href="https://maps.google.com/?q=Tee+Zone+Driving+Range+4105+Bronte+Road+Oakville">Get directions to Tee Zone</a></div></div>
 <div class="ticket"><h3 style="font-family:var(--serif);font-size:28px;font-weight:400;text-transform:uppercase;margin-bottom:16px">Send a message</h3>
-<form><div class="f2"><div class="f">Your name</div><div class="f">Email</div></div><div class="f">Phone (optional)</div>
-<div class="f">I'm interested in… Joining a program · Volunteering · Sponsoring · Donating · Other</div>
-<div class="f tall">Message</div><a class="btn btn-red" style="justify-self:start">Send message</a></form></div></div></section>''')
+<form action="https://formsubmit.co/{EMAIL}" method="POST">
+<input type="hidden" name="_subject" value="New message from the Challenge Golf website"><input type="hidden" name="_template" value="table"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<div class="f2"><label><span class="sr">Your name</span><input class="f" name="name" placeholder="Your name" required autocomplete="name"></label><label><span class="sr">Email</span><input class="f" type="email" name="email" placeholder="Email" required autocomplete="email"></label></div>
+<label><span class="sr">Phone (optional)</span><input class="f" type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel"></label>
+<label><span class="sr">I'm interested in</span><select class="f" name="interest"><option value="">I'm interested in…</option><option>Visiting / joining a program</option><option>Volunteering</option><option>Sponsoring</option><option>Donating</option><option>Other</option></select></label>
+<label><span class="sr">Message</span><textarea class="f tall" name="message" placeholder="Message" required></textarea></label>
+<button class="btn btn-red" type="submit" style="justify-self:start">Send message</button></form></div></div></section>''')
 
 print("built", [f for f in os.listdir(OUT) if f.endswith(".html")])
