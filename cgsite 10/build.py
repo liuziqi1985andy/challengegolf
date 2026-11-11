@@ -90,8 +90,8 @@ def page(fname, title, desc, hero, main):
 <body><div class="top">{header(fname)}{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
 
-HERO_IMG = {"About us": ("group-lanai", "50% 50%"), "Programs": ("range-laughs", "50% 45%"), "Events": ("group-teezone", "50% 50%"),
-            "Gallery": ("flag-friends", "50% 45%"), "Support us": ("volunteers-gazebo", "50% 50%"), "Contact": ("patio-friends", "50% 45%")}
+HERO_IMG = {"About us": ("group-lanai", "50% 50%"), "Programs": ("winter-volunteers", "50% 45%"), "Events": ("christmas-friends", "50% 35%"),
+            "Gallery": ("tournament-colour", "50% 45%"), "Support us": ("range-smiles", "50% 40%"), "Contact": ("patio-friends", "50% 45%")}
 
 def phero(kicker, title, text):
     f, pos = HERO_IMG[kicker]
