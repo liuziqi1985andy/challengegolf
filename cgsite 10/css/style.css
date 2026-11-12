@@ -335,5 +335,4 @@ form{display:grid;gap:14px}
 @media (min-width:1181px) and (max-width:1300px){.links{gap:14px;font-size:14px}.brand{font-size:18px}.links .btn{padding:10px 16px}}
 .ticket .sched{margin:6px 0 4px}.ticket .sched div{grid-template-columns:118px 1fr;background:#f4f7f1;padding:10px 12px;font-size:14.5px}
 @media (min-width:761px) and (max-width:1180px){.ring{width:100%;max-width:560px}.ring .s{right:-6px}}
-.logos img{max-width:100%;height:auto;max-height:none}
-@media (max-width:760px){.logos img{max-height:86px;width:auto!important;max-width:100%}}
+.logos img{max-height:112px;max-width:88%}
