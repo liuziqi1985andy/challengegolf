@@ -358,3 +358,17 @@ html{scroll-padding-top:96px}
 .sitehead .burger svg path{stroke:#1d3d21}
 @media (max-width:1180px){.sitehead .links.open{background:#fff;border-bottom:4px solid var(--lime);box-shadow:0 12px 24px rgba(0,0,0,.15)}}
 .skip{color:#1d3d21}
+/* ---- menu refinement: one red (Donate), larger calmer text, gold CG35 badge ---- */
+@media (min-width:1181px){
+  .sitehead .links{gap:22px;font-size:16px}
+  .sitehead .brand{font-size:19px}
+}
+.sitehead .links a{font-weight:500;color:#1d3d21}
+.sitehead .links a:hover,.sitehead .links a.on{color:#1d3d21;border-color:#1d3d21}
+.sitehead .links a.on{font-weight:700}
+.sitehead .links a.hl{color:#6b4e00;font-weight:700;background:#fff4d6;border:1.5px solid #d4a73c;border-radius:999px;padding:5px 12px}
+.sitehead .links a.hl:hover,.sitehead .links a.hl.on{color:#6b4e00;background:#ffe9ad;border-color:#b8891f}
+.sitehead .links .btn-red{font-size:16px;font-weight:700;padding:11px 22px}
+@media (max-width:1180px){.sitehead .links a{font-size:18px;padding:8px 0}.sitehead .links a.hl{padding:6px 14px}}
+.sitehead .brand{flex:none}
+@media (min-width:1181px){.sitehead .links{gap:15px}.sitehead .brand{font-size:17px;letter-spacing:.06em;gap:12px}.sitehead .nav{gap:24px}}
