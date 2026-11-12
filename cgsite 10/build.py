@@ -269,20 +269,11 @@ page("gallery.html", "Gallery | Challenge Golf", "Photos and videos from Challen
 <p style="color:var(--muted);margin-top:18px">Have photos from a Challenge Golf event? Send them to <a href="mailto:{EMAIL}" style="color:var(--red);font-weight:700">{EMAIL}</a>.</p></div></section>''')
 
 # ------------------------------------------------------------------ SUPPORT US
-sponsors = [("tee-zone", "Tee Zone Driving Range"), ("granite-ridge", "Granite Ridge Golf Club"), ("birdies-indoor-golf", "Birdies Indoor Golf"), ("civitan-oakville", "Civitan Club of Oakville"),
-            ("paragolf-ontario", "Paragolf Ontario"), ("golf-journalists", "Golf Journalists Association of Canada"),
-            ("golf-canada-foundation", "Golf Canada Foundation"), ("enbridge", "Enbridge Fueling Futures"),
-            ("mind-forward", "Mind Forward Brain Injury Services"), ("passion-for-parkinsons", "Passion for Parkinson's Foundation"),
-            ("oakville-strokers", "Oakville Strokers"), ("maple-lodge-farms", "Maple Lodge Farms"),
+sponsors = [("tee-zone", "Tee Zone Driving Range"), ("granite-ridge", "Granite Ridge Golf Club"), ("birdies-indoor-golf", "Birdies Indoor Golf"),
+            ("civitan-oakville", "Civitan Club of Oakville"), ("paragolf-ontario", "Paragolf Ontario"), ("golf-journalists", "Golf Journalists Association of Canada"),
+            ("golf-canada-foundation", "Golf Canada Foundation"), ("enbridge", "Enbridge Fueling Futures"), ("mind-forward", "Mind Forward Brain Injury Services"),
+            ("passion-for-parkinsons", "Passion for Parkinson's Foundation"), ("oakville-strokers", "Oakville Strokers"), ("maple-lodge-farms", "Maple Lodge Farms"),
             ("oakville-community-foundation", "Oakville Community Foundation"), ("canadian-women-sport", "Canadian Women & Sport")]
-def logo_size(slug, area=17500, max_w=220, max_h=112):
-    # Optical sizing: give every logo about the same visual area so none dominates.
-    from PIL import Image
-    w, h = Image.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "img", "sponsors", slug + ".png")).size
-    r = w / h
-    area *= {"birdies-indoor-golf": 0.62, "mind-forward": 0.85}.get(slug, 1)  # tone down very bold wordmarks
-    dw = min((area * r) ** 0.5, max_w, max_h * r)
-    return round(dw), round(dw / r)
 icon = lambda p: f'<span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#25502a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{p}</svg></span>'
 page("support.html", "Support Us | Challenge Golf", "Donate, volunteer, sponsor or donate golf equipment.",
      phero("Support us", "Help every golfer swing", "Challenge Golf is run entirely by volunteers, so every donation goes directly to our programs."),
@@ -317,7 +308,7 @@ page("support.html", "Support Us | Challenge Golf", "Donate, volunteer, sponsor 
 <p>Support our tournaments, BBQ, Christmas Luncheon or the CG35 celebration, and be recognized on our website, on our social media and at events.</p><a class="btn btn-red" href="contact.html">Sponsorship enquiries</a></div></div></section>
 
 <section id="supporters"><div class="wrap center"><span class="sec-k">Thank you</span><h2>Our supporters</h2><p class="lead">Thank you to every organization that helps keep Challenge Golf free for participants. Our recent supporters have included:</p>
-<div class="logos" style="margin-top:30px">{''.join(f'<div><img src="img/sponsors/{s}.png" alt="{n}" title="{n}" width="{logo_size(s)[0]}" height="{logo_size(s)[1]}" style="width:{logo_size(s)[0]}px"></div>' for s,n in sponsors)}</div></div></section>''')
+<div class="logos" style="margin-top:30px">{''.join(f'<div><img src="img/sponsors/{s}.png" alt="{n}" title="{n}"></div>' for s,n in sponsors)}</div></div></section>''')
 
 # ------------------------------------------------------------------ CONTACT
 page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge Golf. Email info@challengegolf.ca.",
