@@ -345,3 +345,16 @@ html{scroll-padding-top:96px}
 @media (min-width:1181px){.sitehead.scrolled .nav{height:68px}.sitehead.scrolled .brand img{width:42px;height:42px}}
 @media (max-width:1180px){.sitehead .links.open{top:100%;max-height:calc(100vh - 80px);overflow-y:auto}}
 @media (max-width:760px){html{scroll-padding-top:84px}}
+/* ---- high-contrast white menu bar ---- */
+.sitehead{background:#fff;color:#1d3d21;border-bottom:4px solid var(--lime);box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.sitehead.scrolled{box-shadow:0 6px 22px rgba(21,42,23,.22)}
+.sitehead .brand{color:#1d3d21;font-weight:600}
+.sitehead .brand .seal{background:#fff;box-shadow:0 0 0 2px #1d3d21}
+.sitehead .links a{color:#1d3d21;opacity:1;font-weight:600}
+.sitehead .links a:hover,.sitehead .links a.on{border-color:#b81614;color:#b81614}
+.sitehead .links a.hl{color:#b81614;font-weight:800}
+.sitehead .links .btn-red{color:#fff;border:0}
+.sitehead .links .btn-red:hover{color:#fff;background:#8f100e}
+.sitehead .burger svg path{stroke:#1d3d21}
+@media (max-width:1180px){.sitehead .links.open{background:#fff;border-bottom:4px solid var(--lime);box-shadow:0 12px 24px rgba(0,0,0,.15)}}
+.skip{color:#1d3d21}
