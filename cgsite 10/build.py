@@ -143,7 +143,7 @@ page("index.html", "Challenge Golf | Golf for the Physically Challenged, Oakvill
 ''')
 
 # ------------------------------------------------------------------ ABOUT
-board = ["Andy Liu", "Danny Foran", "Jason Vale", "Anne Lamont", "Andy Westcott", "Tamara Boaden",
+board = ["Andy Liu", "Danny Foran", "Jason Vale", "Anne Lamont", "Andy Westcott",
          "Susan Barber Kahro", "Darryl Clarence", "Neil Huddlestone", "Sharon Brodner"]
 page("about.html", "About Us | Challenge Golf", "Our mission, history and board of directors.",
      phero("About us", "Our story", "Golf for the Physically Challenged, also known as Challenge Golf, is a registered Canadian charity based in Oakville, Ontario."),
