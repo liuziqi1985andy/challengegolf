@@ -2,6 +2,8 @@
 Each page shares the same header, footer and swoosh. Run: python3 build.py"""
 import os
 OUT = os.path.dirname(os.path.abspath(__file__))
+import time
+VERSION = time.strftime("%Y%m%d%H%M")  # changes every build so browsers load the newest styles
 
 NAV = [("index.html", "Home"), ("about.html", "About"), ("programs.html", "Programs"), ("events.html", "Schedule & Events"),
        ("cg35.html", "CG35 Gala"), ("gallery.html", "Gallery"), ("support.html", "Support Us"),
@@ -66,7 +68,7 @@ def header(active):
 <div class="wrap nav"><a class="brand" href="index.html"><span class="seal"><img src="{LOGO}" alt="Challenge Golf 35 Years logo"></span>Challenge Golf</a>
 <nav class="links" id="menu" aria-label="Main">{links}<a class="btn btn-red" href="support.html#donate">Donate</a></nav>
 <button class="burger" aria-label="Open menu" onclick="document.getElementById('menu').classList.toggle('open')">
-<svg width="30" height="30" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button></div>'''
+<svg width="30" height="30" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="#1d3d21" stroke-width="2" stroke-linecap="round"/></svg></button></div>'''
 
 FOOTER = f'''<footer><div class="wrap"><div class="cols">
 <div><div class="fbrand"><span class="seal"><img src="{LOGO}" alt=""></span>Challenge Golf</div>
@@ -87,7 +89,7 @@ document.querySelectorAll('.video[data-yt]').forEach(function(v){v.addEventListe
 
 def page(fname, title, desc, hero, main):
     html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css"></head>
+<title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css?v={VERSION}"></head>
 <body><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
 
