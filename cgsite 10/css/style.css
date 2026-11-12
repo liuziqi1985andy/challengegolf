@@ -336,3 +336,12 @@ form{display:grid;gap:14px}
 .ticket .sched{margin:6px 0 4px}.ticket .sched div{grid-template-columns:118px 1fr;background:#f4f7f1;padding:10px 12px;font-size:14.5px}
 @media (min-width:761px) and (max-width:1180px){.ring{width:100%;max-width:560px}.ring .s{right:-6px}}
 .logos img{max-height:112px;max-width:88%}
+/* ---- sticky header ---- */
+html{scroll-padding-top:96px}
+.sitehead{position:sticky;top:0;z-index:50;background:var(--green-d);color:#fff;transition:box-shadow .2s}
+.sitehead .nav{transition:height .2s}
+.sitehead .brand img{transition:width .2s,height .2s}
+.sitehead.scrolled{box-shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (min-width:1181px){.sitehead.scrolled .nav{height:68px}.sitehead.scrolled .brand img{width:42px;height:42px}}
+@media (max-width:1180px){.sitehead .links.open{top:100%;max-height:calc(100vh - 80px);overflow-y:auto}}
+@media (max-width:760px){html{scroll-padding-top:84px}}
