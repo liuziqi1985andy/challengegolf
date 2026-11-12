@@ -77,6 +77,7 @@ FOOTER = f'''<footer><div class="wrap"><div class="cols">
 </div><div class="legal"><span>© 2026 Challenge Golf · Golf for the Physically Challenged</span><span>Charity registration number {CHARITY}</span></div></div></footer>'''
 
 VIDEO_JS = r"""<script>
+(function(){var h=document.getElementById('sitehead');function f(){h.classList.toggle('scrolled',window.scrollY>40)}window.addEventListener('scroll',f,{passive:true});f();})();
 document.querySelectorAll('.video[data-yt]').forEach(function(v){v.addEventListener('click',function(e){
  e.preventDefault();var f=document.createElement('iframe');
  f.src='https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0';
@@ -87,7 +88,7 @@ document.querySelectorAll('.video[data-yt]').forEach(function(v){v.addEventListe
 def page(fname, title, desc, hero, main):
     html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css"></head>
-<body><div class="top">{header(fname)}{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
+<body><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
 
 HERO_IMG = {"About us": ("group-lanai", "50% 50%"), "Programs": ("range-lineup", "50% 60%"), "Events": ("putting-green-four", "50% 45%"),
