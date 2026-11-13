@@ -66,14 +66,14 @@ def header(active):
         f'<a href="{h}" class="{"on " if h == active else ""}{"hl" if h == "cg35.html" else ""}">{t}</a>' for h, t in NAV)
     return f'''<a class="skip" href="#main">Skip to content</a>
 <div class="wrap nav"><a class="brand" href="index.html"><span class="seal"><img src="{LOGO}" alt="Challenge Golf 35 Years logo"></span>Challenge Golf</a>
-<nav class="links" id="menu" aria-label="Main">{links}<a class="btn btn-red" href="support.html#donate">Donate</a></nav>
+<nav class="links" id="menu" aria-label="Main">{links}<a class="btn btn-mem{" on" if active=="members.html" else ""}" href="members.html">Members</a><a class="btn btn-red" href="support.html#donate">Donate</a></nav>
 <button class="burger" aria-label="Open menu" onclick="document.getElementById('menu').classList.toggle('open')">
 <svg width="30" height="30" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="#1d3d21" stroke-width="2" stroke-linecap="round"/></svg></button></div>'''
 
 FOOTER = f'''<footer><div class="wrap"><div class="cols">
 <div><div class="fbrand"><span class="seal"><img src="{LOGO}" alt=""></span>Challenge Golf</div>
 <p style="margin-top:14px;max-width:320px">Golf for the Physically Challenged. A registered Canadian charity, run entirely by volunteers in Oakville, Ontario since 1992.</p></div>
-<div><h5>Explore</h5><a href="index.html">Home</a><a href="about.html">About Us</a><a href="programs.html">Programs</a><a href="events.html">Schedule &amp; Events</a><a href="gallery.html">Gallery</a></div>
+<div><h5>Explore</h5><a href="index.html">Home</a><a href="about.html">About Us</a><a href="programs.html">Programs</a><a href="events.html">Schedule &amp; Events</a><a href="gallery.html">Gallery</a><a href="members.html">Members</a></div>
 <div><h5>Get involved</h5><a href="support.html#donate">Donate</a><a href="support.html#volunteer">Volunteer</a><a href="support.html#sponsor">Sponsor</a><a href="cg35.html">CG35 Gala</a></div>
 <div><h5>Contact</h5><a href="mailto:{EMAIL}">{EMAIL}</a>{SOCIAL}</div>
 </div><div class="legal"><span>© 2026 Challenge Golf · Golf for the Physically Challenged</span><span>Charity registration number {CHARITY}</span></div></div></footer>'''
@@ -358,7 +358,6 @@ page("members.html", "Members | Challenge Golf", "Registration and sign-ups for 
 <section><div class="wrap"><div class="grid2">
 <div class="card"><h3>Summer Program 2027</h3><p>Registration will be announced in the spring. Watch your email or check back here.</p><div class="m">Tee Zone Driving Range · Mondays</div></div>
 <div class="card g"><h3>2027 Tournaments</h3><p>Monday, August 23 and Monday, October 18 at Granite Ridge Golf Club, first tee 10:00 am. Groups of four, best ball, each participant paired with a volunteer. Registration opens in the summer.</p><div class="m">Subsidized fee</div></div>
-</div></div></section>''',
-     extra_head='<meta name="robots" content="noindex, nofollow">')
+</div></div></section>''')
 
 print("built", [f for f in os.listdir(OUT) if f.endswith(".html")])
