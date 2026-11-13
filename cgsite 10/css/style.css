@@ -384,3 +384,61 @@ html{scroll-padding-top:96px}
 .sitehead .links .btn-mem:hover,.sitehead .links .btn-mem.on{background:#1d3d21;color:#fff}
 @media (min-width:1181px){.sitehead .links{gap:13px}.sitehead .links .btn-red,.sitehead .links .btn-mem{padding:9px 16px}}
 @media (min-width:1181px){.sitehead .links{gap:11px;font-size:15px}.sitehead .links .btn-red,.sitehead .links .btn-mem{padding:9px 13px;font-size:15px}.sitehead .links a.hl{padding:5px 10px}.sitehead .nav{gap:18px}.sitehead .brand{font-size:16px}}
+
+/* ---- Members page v2: notice, notes, native registration form ---- */
+section.tight{padding-top:40px}
+.notice{display:flex;gap:18px;align-items:flex-start;background:#fff4e5;border:2px solid #f0a33a;border-radius:18px;padding:22px 26px;margin-bottom:26px}
+.notice .ni{flex:none;width:40px;height:40px;border-radius:50%;background:#f0a33a;color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center}
+.notice h3{margin:0 0 6px;color:#7a4a00}.notice p{margin:0}
+.notes .card{padding:24px}.notes .card h3{margin-top:0}
+.welcome{margin:22px auto 0;text-align:left;background:#f4f8ef;border-radius:14px;padding:4px 20px}
+.welcome summary{cursor:pointer;font-weight:700;color:var(--green-d);padding:12px 0}
+.welcome[open] summary{border-bottom:1px solid #dfe8d4;margin-bottom:8px}
+.regform{max-width:820px;margin:34px auto 0;text-align:left}
+.regform fieldset{border:0;background:#fff;border-radius:18px;padding:26px 28px;margin:0 0 20px;box-shadow:0 2px 12px rgba(0,0,0,.06);border-top:5px solid var(--lime)}
+.regform fieldset[hidden],.regform [hidden]{display:none!important}
+.regform legend{font-family:var(--serif);font-size:24px;text-transform:uppercase;color:var(--green-d);float:left;width:100%;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.regform legend b{font-family:inherit;width:34px;height:34px;border-radius:50%;background:var(--green-d);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
+.regform legend+*{clear:both}
+.regform .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin:8px 0}
+.regform .rf{display:flex;flex-direction:column;gap:6px}.regform .rf.full{grid-column:1/-1}
+.regform .rf>span,.regform .q>span{font-weight:700;color:#233}
+.regform i{color:var(--red);font-style:normal}.regform em{color:#888;font-weight:400;font-style:normal;font-size:.9em}
+.regform input[type=text],.regform input[type=email],.regform input[type=tel],.regform input[type=date],.regform textarea{font:inherit;font-size:17px;padding:12px 14px;border:2px solid #cfd8c6;border-radius:10px;background:#fbfdf9;width:100%;box-sizing:border-box}
+.regform input:focus,.regform textarea:focus{outline:none;border-color:var(--green);background:#fff;box-shadow:0 0 0 3px rgba(140,198,63,.3)}
+.regform small{color:#667;font-size:14px}
+.regform .q{margin:16px 0}
+.regform .opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.regform .opts.dates{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.regform .opt{display:flex;align-items:flex-start;gap:10px;border:2px solid #dbe4d1;border-radius:12px;padding:12px 16px;cursor:pointer;background:#fbfdf9;font-size:16px;line-height:1.35}
+.regform .opt:has(input:checked){border-color:var(--green);background:#eef7e2}
+.regform .opt input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--green-d)}
+.regform .opt small{display:block;font-weight:400}
+.regform .opt.all{margin:4px 0 10px;width:fit-content}
+.regform .other{margin-top:12px;max-width:420px}
+.regform .legal{max-height:190px;overflow:auto;background:#f6f7f4;border-radius:12px;padding:14px 18px;font-size:14px;line-height:1.55;color:#444;margin-bottom:14px;border:1px solid #e2e6dc}
+.regform .legal p{margin:0 0 10px}
+.regform .fhint{color:#556;font-size:15px;margin:4px 0 10px}
+.regform .bad>span,.regform .bad>legend{color:var(--red)}
+.regform .bad input[type=text],.regform .bad input[type=email],.regform .bad input[type=tel],.regform .bad textarea,.regform .opt.bad,.regform .bad .opt{border-color:var(--red)}
+.regform .ferr{background:#fdeceb;color:var(--red-d);border-radius:12px;padding:14px 18px;font-weight:700;margin-bottom:14px}
+.regform .btn.big{font-size:19px;padding:16px 34px;width:100%;max-width:360px;display:block;margin:0 auto 8px;border:0;cursor:pointer}
+.regform .btn.big:disabled{opacity:.6;cursor:wait}
+.regform>.fhint{text-align:center}
+.regdone{max-width:640px;margin:34px auto 0;background:#eef7e2;border-radius:18px;padding:30px;text-align:center;border:2px solid var(--lime)}
+@media (max-width:760px){
+ .notice{padding:18px;gap:12px}
+ .regform fieldset{padding:20px 16px}
+ .regform .fg{grid-template-columns:1fr}
+ .regform .opts{flex-direction:column}.regform .opts.dates{grid-template-columns:1fr 1fr}
+ .regform .opt{width:auto}
+ .regform legend{font-size:20px}
+ /* CG35 hero: keep ticket + sponsor buttons visible on phones */
+ .cg-hero{gap:14px;padding-top:18px;padding-bottom:110px}
+ .cg-hero .seal img{width:96px!important;height:96px!important}
+ .cg-hero .seal{padding:5px;box-shadow:0 0 0 4px var(--lime)}
+ .cg-hero h1{font-size:34px!important;margin-top:6px!important}
+ .cg-hero p{font-size:16px!important;margin:10px 0 18px!important}
+ .cg-hero .btns{gap:10px}
+ .cg-hero .btns .btn{padding:12px 18px;font-size:16px}
+}
