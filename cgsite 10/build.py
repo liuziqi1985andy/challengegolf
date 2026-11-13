@@ -334,7 +334,7 @@ page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge
 
 # ------------------------------------------------------------------ MEMBERS (draft, not in menu yet)
 FORM_ID = "1W03fyI15km5hQTgJby1a8CuAzfboky9HZQLtFWnPSYo"
-FORM_VIEW = f"https://docs.google.com/forms/d/{FORM_ID}/viewform"
+FORM_VIEW = "https://docs.google.com/forms/d/e/1FAIpQLSdzyD_z11kPYILqpK6kkfyDNPWa81xWXZSpGZPGzhaf4RF1DA/viewform"  # public responder link
 page("members.html", "Members | Challenge Golf", "Registration and sign-ups for Challenge Golf participants and volunteers.",
      phero("Members", "Member hub", "Registration, sign-ups and key dates for Challenge Golf participants and volunteers, all in one place."),
      f'''<section><div class="wrap">
