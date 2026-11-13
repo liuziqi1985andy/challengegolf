@@ -442,3 +442,5 @@ section.tight{padding-top:40px}
  .cg-hero .btns{gap:10px}
  .cg-hero .btns .btn{padding:12px 18px;font-size:16px}
 }
+.regform .opt.confirm{margin:0 0 18px;background:#fff8e8;border-color:#f0c47a;font-weight:600}
+.regform .opt.confirm:has(input:checked){background:#eef7e2;border-color:var(--green)}
