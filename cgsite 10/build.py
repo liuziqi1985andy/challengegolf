@@ -335,29 +335,133 @@ page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge
 # ------------------------------------------------------------------ MEMBERS (draft, not in menu yet)
 FORM_ID = "1W03fyI15km5hQTgJby1a8CuAzfboky9HZQLtFWnPSYo"
 FORM_VIEW = "https://docs.google.com/forms/d/e/1FAIpQLSdzyD_z11kPYILqpK6kkfyDNPWa81xWXZSpGZPGzhaf4RF1DA/viewform"  # public responder link
+FORM_POST = FORM_VIEW.replace("/viewform", "/formResponse")
+WDATES = ["Jan 11 2027","Jan 18 2027","Jan 25 2027","Feb 01 2027","Feb 08 2027","Feb 22 2027","Mar 01 2027","Mar 08 2027","Mar 15 2027","Mar 22 2027","Apr 05 2027","Apr 12 2027","Apr 19 2027"]
+def fld(label, name, req=True, typ="text", extra="", full=False, hint=""):
+    r = " required" if req else ""
+    star = ' <i>*</i>' if req else ' <em>(optional)</em>'
+    ctl = (f'<textarea name="{name}" rows="2"{r}{extra}></textarea>' if typ == "area" else f'<input type="{typ}" name="{name}"{r}{extra}>')
+    return f'<label class="rf{" full" if full else ""}"><span>{label}{star}</span>{ctl}{"<small>"+hint+"</small>" if hint else ""}</label>'
+def radios(name, opts, req=True, cls=""):
+    return '<div class="opts '+cls+'">' + "".join(f'<label class="opt"><input type="radio" name="{name}" value="{v}"{" required" if req else ""}><span>{t}</span></label>' for v, t in opts) + '</div>'
+WAIVER = ("In consideration of being allowed to participate in the winter indoor golf sessions (hereinafter referred to as \"the activities\") hosted by Golf for the Physically Challenged (hereinafter referred to as \"Challenge Golf\") at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville, ON L6H 3K4), I (hereinafter referred to as 'the participant', whether registering as a participant or a volunteer), hereby acknowledge and agree to release and forever discharge Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of action, suits, claims, and demands for damages which may be sustained by the participant in consequence of participating in the activities. The undersigned further agrees to indemnify and save harmless Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of actions, suits, claims, and demands that may be brought by any person regarding damages sustained by the participant, the participant's spouse, or their family/families in consequence of participating in the activities.")
+PHOTO = ("<p>I grant Challenge Golf permission to use my recorded image, likeness, and voice without payment or any other consideration. I understand that my image may be copied, exhibited, published, edited, or distributed, and I waive the right to inspect or approve the finished product where my likeness appears. I also waive any right to royalties or other compensation arising or related to the use of my image or recording.</p>"
+         "<p>By signing this release, I understand that my permission signifies that photographic or video recordings of me may be electronically displayed via the Internet or in a public setting. These recordings may be used for the following purposes: social media, educational videos, informational presentations, conference presentations, online educational courses, and educational presentations or courses.</p>"
+         "<p>I acknowledge that there is no time limit on the validity of this release, nor is there any geographic limitation on where these materials may be distributed. By signing this release, I confirm that I have completely read and fully understand the above release and agree to be bound by it. I hereby release any and all claims against any person or organization utilizing this material for informational or educational purposes.</p>")
+ONBEHALF = "If the participant is unable to sign: your full name, signing on their behalf"
+REGFORM = f"""<form id="regform" class="regform" action="{FORM_POST}" method="POST" target="reg_sink" novalidate>
+<fieldset><legend><b>1</b> About you</legend>
+<div class="fg">{fld("Email", "emailAddress", typ="email", extra=' autocomplete="email"', full=True, hint="Your confirmation copy will be sent here.")}</div>
+<div class="q"><span>I am registering as a <i>*</i></span>{radios("entry.155881205", [("Participant","Participant"),("Volunteer","Volunteer")])}</div>
+<div class="q"><span>Which program are you registering for? <i>*</i></span>{radios("entry.1247347670", [("Winter Program 2027","Winter Program 2027 <small>Mondays, Jan 11 – Apr 19, 2027</small>"),("Summer Program 2027","Summer Program 2027 <small>Dates to be announced</small>")])}</div>
+<div class="q"><span>Have you registered for our program online before? <i>*</i></span>{radios("entry.625157265", [("Yes (Returning)","Yes, I'm returning"),("No (New)","No, I'm new")])}</div>
+<div class="q" data-show="returning"><span>Has your contact or emergency contact information changed? <i>*</i></span>{radios("entry.863878588", [("Yes","Yes"),("No","No, it's the same")])}</div>
+</fieldset>
+<fieldset data-show="details"><legend><b>2</b> Your information</legend>
+<div class="fg">{fld("First name","entry.582226185",extra=' autocomplete="given-name"')}{fld("Last name","entry.855444910",extra=' autocomplete="family-name"')}
+{fld("Phone","entry.1422363565",typ="tel",extra=' autocomplete="tel"')}{fld("Address","entry.639476172",extra=' autocomplete="street-address"')}
+{fld("City","entry.1211851042",extra=' autocomplete="address-level2"')}{fld("Postal code","entry.705078771",extra=' autocomplete="postal-code"')}</div>
+<div class="q"><span>Dietary restriction <i>*</i></span>{radios("entry.556087404", [("None","None"),("Vegetarian","Vegetarian"),("Vegan","Vegan"),("Gluten-free","Gluten-free"),("__other_option__","Other")], cls="row")}
+<label class="rf other" data-show="dietother"><span>Please describe <i>*</i></span><input type="text" name="entry.556087404.other_option_response"></label></div>
+<div class="fg">{fld("Comments","entry.1246653210",req=False,typ="area",full=True)}</div>
+</fieldset>
+<fieldset data-show="details"><legend><b>3</b> Emergency contact</legend>
+<div class="fg">{fld("First name","entry.1765119339")}{fld("Last name","entry.1180003187")}{fld("Relationship","entry.1901088595")}{fld("Phone","entry.1747550302",typ="tel")}{fld("Email","entry.604465405",typ="email",full=True)}</div>
+</fieldset>
+<fieldset><legend><b>4</b> Dates you plan to attend</legend>
+<p class="fhint">Winter Program 2027: Mondays, 1–3 pm at Birdies Indoor Golf. No golf on Family Day (Feb 15, 2027) or Easter Monday (Mar 29, 2027).</p>
+<label class="opt all"><input type="checkbox" id="alldates"><span><b>I plan to attend all dates</b></span></label>
+<div class="opts dates">{"".join(f'<label class="opt"><input type="checkbox" name="entry.1338111941" value="{d}"><span>{d[:6]}, {d[7:]}</span></label>' for d in WDATES)}</div>
+</fieldset>
+<fieldset><legend><b>5</b> Release and indemnification agreement</legend>
+<div class="legal"><p>{WAIVER}</p></div>
+<label class="opt"><input type="checkbox" name="entry.1530836672" value="I understand and confirm acceptance of the agreement listed above." required><span>I understand and confirm acceptance of the agreement listed above. <i>*</i></span></label>
+<div class="fg">{fld("Your full name (electronic signature)","entry.729129411",full=True)}{fld(ONBEHALF,"entry.1684059601",req=False)}{fld("Relationship to the participant","entry.467638664",req=False)}{fld("Date","date1",typ="date")}</div>
+</fieldset>
+<fieldset><legend><b>6</b> Photo and video release</legend>
+<div class="legal">{PHOTO}</div>
+{radios("entry.906993787", [("I understand and confirm acceptance of the Photo and Video Release Form listed above.","I accept the Photo and Video Release"),("I choose not to accept the Photo and Video Release Form outlined above.","I do not accept the Photo and Video Release")])}
+<div class="fg">{fld("Your full name (electronic signature)","entry.349016699",full=True,hint="If you don't accept, type &ldquo;Don't Accept&rdquo;.")}{fld(ONBEHALF,"entry.1344938080",req=False)}{fld("Relationship to the participant","entry.1972422483",req=False)}{fld("Date","date2",typ="date")}</div>
+</fieldset>
+<input type="hidden" name="pageHistory" value=""><input type="hidden" name="fvv" value="1">
+<input type="hidden" name="entry.104537785_year"><input type="hidden" name="entry.104537785_month"><input type="hidden" name="entry.104537785_day">
+<input type="hidden" name="entry.358200624_year"><input type="hidden" name="entry.358200624_month"><input type="hidden" name="entry.358200624_day">
+<div class="ferr" id="ferr" role="alert" hidden></div>
+<button class="btn btn-red big" type="submit" id="regsubmit">Submit registration</button>
+<p class="fhint">By submitting, you confirm the information above is correct. No Google account is needed.</p>
+</form>
+<iframe name="reg_sink" id="reg_sink" title="Form submission" hidden></iframe>
+<div class="regdone" id="regdone" hidden tabindex="-1"><h3>Thank you, you're registered!</h3><p>We've received your registration for the 2027 program. A confirmation copy will be sent to your email. If you have any questions, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div>"""
+REG_JS = r"""<script>(function(){
+var f=document.getElementById('regform');if(!f)return;
+function val(n){var e=f.querySelector('[name="'+n+'"]:checked');return e?e.value:'';}
+function upd(){var ret=val('entry.625157265'),ch=val('entry.863878588');
+ var showRet=ret.indexOf('Yes')===0, details=(ret.indexOf('No')===0)||(showRet&&ch==='Yes');
+ f.querySelectorAll('[data-show="returning"]').forEach(function(e){e.hidden=!showRet});
+ f.querySelectorAll('[data-show="details"]').forEach(function(e){e.hidden=!details});
+ f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('entry.556087404')!=='__other_option__'});}
+f.addEventListener('change',upd);upd();
+var all=document.getElementById('alldates'),ds=f.querySelectorAll('.dates input');
+all.addEventListener('change',function(){ds.forEach(function(d){d.checked=all.checked})});
+ds.forEach(function(d){d.addEventListener('change',function(){all.checked=[].every.call(ds,function(x){return x.checked})})});
+var t=new Date(),iso=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
+f.date1.value=iso;f.date2.value=iso;
+f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=null;
+ f.querySelectorAll('.bad').forEach(function(e){e.classList.remove('bad')});
+ function bad(el,msg){var box=el.closest('.q,.rf,.opt,fieldset');box.classList.add('bad');if(!first)first=box;err.push(msg);}
+ var seen={};
+ f.querySelectorAll('input,textarea').forEach(function(el){if(el.closest('[hidden]')||el.type==='hidden')return;
+  if(el.type==='radio'){if(el.required&&!val(el.name)&&!seen[el.name]){seen[el.name]=1;bad(el,'Please choose an answer.');}return;}
+  if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,'Please accept the agreement.');return;}
+  if(el.required&&!el.value.trim())bad(el,'Please fill in all required fields.');
+  else if(el.type==='email'&&el.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()))bad(el,'Please check the email address.');});
+ var oth=f['entry.556087404.other_option_response'];
+ if(!oth.closest('[hidden]')&&!oth.value.trim())bad(oth,'Please describe your dietary restriction.');
+ if(!f.querySelector('.dates input:checked'))bad(f.querySelector('.dates input'),'Please choose at least one date.');
+ var E=document.getElementById('ferr');
+ if(err.length){E.textContent='Please check the highlighted items. '+err.filter(function(x,i,a){return a.indexOf(x)===i}).join(' ');E.hidden=false;first.scrollIntoView({behavior:'smooth',block:'center'});return;}
+ E.hidden=true;
+ var ret=val('entry.625157265'),ch=val('entry.863878588'),ph;
+ if(ret.indexOf('No')===0)ph='0,1,2,4,5,6,7,8';else if(ch==='Yes')ph='0,1,2,3,4,5,6,7,8';else ph='0,1,2,3,6,7,8';
+ f.pageHistory.value=ph;
+ [['date1','104537785'],['date2','358200624']].forEach(function(p){var d=f[p[0]].value.split('-');f['entry.'+p[1]+'_year'].value=d[0];f['entry.'+p[1]+'_month'].value=+d[1];f['entry.'+p[1]+'_day'].value=+d[2];});
+ f.querySelectorAll('[hidden] input,[hidden] textarea').forEach(function(el){el.disabled=true});
+ f.date1.disabled=true;f.date2.disabled=true;all.disabled=true;
+ var b=document.getElementById('regsubmit');b.disabled=true;b.textContent='Sending…';
+ f.submit();
+ setTimeout(function(){f.hidden=true;var d=document.getElementById('regdone');d.hidden=false;d.scrollIntoView({behavior:'smooth',block:'center'});},1500);
+});
+})();</script>"""
+
 page("members.html", "Members | Challenge Golf", "Registration and sign-ups for Challenge Golf participants and volunteers.",
      phero("Members", "Member hub", "Registration, sign-ups and key dates for Challenge Golf participants and volunteers, all in one place."),
-     f'''<section><div class="wrap">
+     f'''<section class="tight"><div class="wrap">
+<div class="notice"><div class="ni" aria-hidden="true">!</div><div><h3>New to Challenge Golf? Please contact us first.</h3>
+<p>Before signing up for a program, new <b>participants and volunteers</b> need to arrange a visit with us, so we can meet you and make sure the program is a good fit. <a class="tlink" href="contact.html">Contact us to arrange a visit →</a></p></div></div>
+<div class="grid3 notes">
+<div class="card r"><h3>Winter Program 2027</h3><p>Mondays, 1–3 pm, <b>January 11 to April 19, 2027</b> at Birdies Indoor Golf Oakville. Registration is open now. <a class="tlink" href="#winter-registration">Register below ↓</a></p></div>
+<div class="card"><h3>Summer Program 2027</h3><p>Registration will be announced in spring 2027. Watch your email or check back here.</p><div class="m">Tee Zone Driving Range · Mondays</div></div>
+<div class="card g"><h3>2027 Tournaments</h3><p><b>Monday, August 23, 2027</b> and <b>Monday, October 18, 2027</b> at Granite Ridge Golf Club, first tee 10:00 am. Groups of four, best ball, each participant paired with a volunteer. Registration opens in summer 2027.</p><div class="m">Subsidized fee</div></div>
+</div>
+<h2 class="center" style="margin-top:46px">Key dates</h2>
 <div class="tiles big mtiles">
-{tile("JAN","11","Mon","Winter Program 2027","Mondays, 1–3 pm, Jan 11 – Apr 19 at Birdies Indoor Golf Oakville. <b>Registration open below.</b>","special","")}
-{tile("MAY","TBA","2027","Summer Program 2027","Registration to be announced.","","")}
-{tile("AUG","23","Mon","Tournament #1","Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
-{tile("OCT","18","Mon","Tournament #2","Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
-{tile("NOV","30","Mon","Christmas Lunch","12:00 pm · Mandarin Restaurant, 3105 Dundas St W · $25 cash only","","")}
-{tile("TBD","★","2027","Summer BBQ","Date to be determined.","off","")}
-{tile("TBD","★","2027","Volunteer Appreciation","Date to be determined.","off","")}
+{tile("NOV 2026","30","Mon","Christmas Lunch","Monday, November 30, 2026 · 12:00 pm · Mandarin Restaurant, 3105 Dundas St W · $25 cash only","","")}
+{tile("JAN 2027","11","Mon","Winter Program 2027","Mondays, 1–3 pm, Jan 11 – Apr 19, 2027 at Birdies Indoor Golf Oakville. <b>Registration open below.</b>","special","")}
+{tile("APR 2027","17","Sat","CG35 Celebration","Saturday, April 17, 2027 · 2–9 pm · Oakville Conference Centre. <a class='tlink' href='cg35.html'>Tickets →</a>","","")}
+{tile("2027","TBA","Summer","Summer Program 2027","Registration to be announced.","","")}
+{tile("AUG 2027","23","Mon","Tournament #1","Monday, August 23, 2027 · Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
+{tile("OCT 2027","18","Mon","Tournament #2","Monday, October 18, 2027 · Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
+{tile("2027","TBD","","Summer BBQ","Date to be determined.","off","")}
+{tile("2027","TBD","","Volunteer Appreciation","Date to be determined.","off","")}
 </div></div></section>
 
 <section class="white" id="winter-registration"><div class="wrap"><div class="center" style="max-width:760px;margin:0 auto">
 <span class="sec-k">Now open</span><h2>2027 Winter Program Registration</h2>
-<p class="lead">For participants and volunteers. Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8. No Google account is needed to register.</p></div>
-<div class="formbox"><iframe src="{FORM_VIEW}?embedded=true" title="2027 Winter Program Registration - Challenge Golf" loading="lazy">Loading…</iframe></div>
-<p class="center" style="margin-top:14px;color:var(--muted)">Having trouble with the form? <a class="tlink" href="{FORM_VIEW}" target="_blank" rel="noopener">Open it in a new tab →</a> or email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a></p>
-</div></section>
-
-<section><div class="wrap"><div class="grid2">
-<div class="card"><h3>Summer Program 2027</h3><p>Registration will be announced in the spring. Watch your email or check back here.</p><div class="m">Tee Zone Driving Range · Mondays</div></div>
-<div class="card g"><h3>2027 Tournaments</h3><p>Monday, August 23 and Monday, October 18 at Granite Ridge Golf Club, first tee 10:00 am. Groups of four, best ball, each participant paired with a volunteer. Registration opens in the summer.</p><div class="m">Subsidized fee</div></div>
-</div></div></section>''')
+<p class="lead">For participants and volunteers. Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8. New to Challenge Golf? <a class="tlink" href="contact.html">Arrange a visit first.</a></p>
+<details class="welcome"><summary>Read the 2027 welcome letter</summary><div><p>Hello everyone,</p><p>We hope you all enjoyed our summer session! To help everyone stay active during the winter months, our Winter Indoor Golf Program will begin again on Monday, January 11, 2027. The program runs Mondays from 1:00 to 3:00 pm at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville), for 13 sessions between January 11 and April 19, 2027 (no golf on Family Day, February 15, or Easter Monday, March 29).</p><p><b>Celebrating 35 years!</b> Join us at our 35th Anniversary Celebration on Saturday, April 17, 2027, 2–9 pm at the Oakville Conference Centre. Participants, volunteers, family and friends are all welcome. <a class="tlink" href="cg35.html">Get your tickets →</a></p><p>By registering online you accept the terms of online registration. If you'd prefer a mail-in form, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></details>
+</div>
+{REGFORM}
+<p class="center" style="margin-top:18px;color:var(--muted)">Having trouble? <a class="tlink" href="{FORM_VIEW}" target="_blank" rel="noopener">Use the Google Form instead →</a> or email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a></p>
+</div></section>''' + REG_JS)
 
 print("built", [f for f in os.listdir(OUT) if f.endswith(".html")])
