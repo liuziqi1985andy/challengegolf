@@ -393,6 +393,9 @@ REGFORM = f"""<form id="regform" class="regform" action="{FORM_POST}" method="PO
 </form>
 <iframe name="reg_sink" id="reg_sink" title="Form submission" hidden></iframe>
 <div class="regdone" id="regdone" hidden tabindex="-1"><h3>Thank you, you're registered!</h3><p>We've received your registration for the 2027 program. A confirmation copy will be sent to your email. If you have any questions, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div>"""
+USE_NATIVE = False  # native form needs Google's "send responders a copy" turned off (reCAPTCHA)
+EMBED = f'<div class="formbox" id="formbox"><iframe id="gform" src="{FORM_VIEW}?embedded=true" title="2027 Winter Program Registration - Challenge Golf">Loading…</iframe></div>'
+EMBED_JS = """<script>(function(){var f=document.getElementById('gform'),n=0;if(!f)return;f.addEventListener('load',function(){if(++n>1){var y=document.getElementById('formbox').getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y,behavior:'smooth'});}});})();</script>"""
 REG_JS = r"""<script>(function(){
 var f=document.getElementById('regform');if(!f)return;
 function val(n){var e=f.querySelector('[name="'+n+'"]:checked');return e?e.value:'';}
@@ -461,8 +464,8 @@ page("members.html", "Members | Challenge Golf", "Registration and sign-ups for 
 <p class="lead">For participants and volunteers. Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8. New to Challenge Golf? <a class="tlink" href="contact.html">Arrange a visit first.</a></p>
 <details class="welcome"><summary>Read the 2027 welcome letter</summary><div><p>Hello everyone,</p><p>We hope you all enjoyed our summer session! To help everyone stay active during the winter months, our Winter Indoor Golf Program will begin again on Monday, January 11, 2027. The program runs Mondays from 1:00 to 3:00 pm at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville), for 13 sessions between January 11 and April 19, 2027 (no golf on Family Day, February 15, or Easter Monday, March 29).</p><p><b>Celebrating 35 years!</b> Join us at our 35th Anniversary Celebration on Saturday, April 17, 2027, 2–9 pm at the Oakville Conference Centre. Participants, volunteers, family and friends are all welcome. <a class="tlink" href="cg35.html">Get your tickets →</a></p><p>By registering online you accept the terms of online registration. If you'd prefer a mail-in form, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></details>
 </div>
-{REGFORM}
+{REGFORM if USE_NATIVE else EMBED}
 <p class="center" style="margin-top:18px;color:var(--muted)">Having trouble? <a class="tlink" href="{FORM_VIEW}" target="_blank" rel="noopener">Use the Google Form instead →</a> or email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a></p>
-</div></section>''' + REG_JS)
+</div></section>''' + (REG_JS if USE_NATIVE else EMBED_JS))
 
 print("built", [f for f in os.listdir(OUT) if f.endswith(".html")])
