@@ -379,3 +379,8 @@ html{scroll-padding-top:96px}
 @media (max-width:760px){.formbox iframe{height:1700px}}
 .mtiles .tile{background:#fff}.tiles.big .tile.special{background:var(--green-d)}
 .tiles.big.mtiles .tile{background:#fff;box-shadow:0 4px 16px rgba(21,42,23,.06)}.tiles.big.mtiles .tile.special{background:var(--green-d)}
+/* members button in menu */
+.sitehead .links .btn-mem{background:#fff;color:#1d3d21;border:2px solid #1d3d21;font-weight:700;padding:9px 18px;font-size:16px}
+.sitehead .links .btn-mem:hover,.sitehead .links .btn-mem.on{background:#1d3d21;color:#fff}
+@media (min-width:1181px){.sitehead .links{gap:13px}.sitehead .links .btn-red,.sitehead .links .btn-mem{padding:9px 16px}}
+@media (min-width:1181px){.sitehead .links{gap:11px;font-size:15px}.sitehead .links .btn-red,.sitehead .links .btn-mem{padding:9px 13px;font-size:15px}.sitehead .links a.hl{padding:5px 10px}.sitehead .nav{gap:18px}.sitehead .brand{font-size:16px}}
