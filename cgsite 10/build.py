@@ -87,13 +87,13 @@ document.querySelectorAll('.video[data-yt]').forEach(function(v){v.addEventListe
  v.classList.add('playing');v.replaceChildren(f);});});
 </script>"""
 
-def page(fname, title, desc, hero, main):
-    html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+def page(fname, title, desc, hero, main, extra_head=""):
+    html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{extra_head}
 <title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css?v={VERSION}"></head>
 <body><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
 
-HERO_IMG = {"About us": ("group-lanai", "50% 50%"), "Programs": ("range-lineup", "50% 60%"), "Events": ("putting-green-four", "50% 45%"),
+HERO_IMG = {"Members": ("winter-team", "50% 50%"), "About us": ("group-lanai", "50% 50%"), "Programs": ("range-lineup", "50% 60%"), "Events": ("putting-green-four", "50% 45%"),
             "Gallery": ("tournament-five", "50% 45%"), "Support us": ("simulator-lesson", "50% 45%"), "Contact": ("course-cart", "50% 60%")}
 
 def phero(kicker, title, text):
@@ -330,5 +330,35 @@ page("contact.html", "Contact Us | Challenge Golf", "Get in touch with Challenge
 <label><span class="sr">I'm interested in</span><select class="f" name="interest"><option value="">I'm interested in…</option><option>Visiting / joining a program</option><option>Volunteering</option><option>Sponsoring</option><option>Donating</option><option>Other</option></select></label>
 <label><span class="sr">Message</span><textarea class="f tall" name="message" placeholder="Message" required></textarea></label>
 <button class="btn btn-red" type="submit" style="justify-self:start">Send message</button></form></div></div></section>''')
+
+
+# ------------------------------------------------------------------ MEMBERS (draft, not in menu yet)
+FORM_ID = "1W03fyI15km5hQTgJby1a8CuAzfboky9HZQLtFWnPSYo"
+FORM_VIEW = f"https://docs.google.com/forms/d/{FORM_ID}/viewform"
+page("members.html", "Members | Challenge Golf", "Registration and sign-ups for Challenge Golf participants and volunteers.",
+     phero("Members", "Member hub", "Registration, sign-ups and key dates for Challenge Golf participants and volunteers, all in one place."),
+     f'''<section><div class="wrap">
+<div class="tiles big mtiles">
+{tile("JAN","11","Mon","Winter Program 2027","Mondays, 1–3 pm, Jan 11 – Apr 19 at Birdies Indoor Golf Oakville. <b>Registration open below.</b>","special","")}
+{tile("MAY","TBA","2027","Summer Program 2027","Registration to be announced.","","")}
+{tile("AUG","23","Mon","Tournament #1","Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
+{tile("OCT","18","Mon","Tournament #2","Granite Ridge Golf Club · first tee 10:00 am. Registration opens in the summer.","","")}
+{tile("NOV","30","Mon","Christmas Lunch","12:00 pm · Mandarin Restaurant, 3105 Dundas St W · $25 cash only","","")}
+{tile("TBD","★","2027","Summer BBQ","Date to be determined.","off","")}
+{tile("TBD","★","2027","Volunteer Appreciation","Date to be determined.","off","")}
+</div></div></section>
+
+<section class="white" id="winter-registration"><div class="wrap"><div class="center" style="max-width:760px;margin:0 auto">
+<span class="sec-k">Now open</span><h2>2027 Winter Program Registration</h2>
+<p class="lead">For participants and volunteers. Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8. No Google account is needed to register.</p></div>
+<div class="formbox"><iframe src="{FORM_VIEW}?embedded=true" title="2027 Winter Program Registration - Challenge Golf" loading="lazy">Loading…</iframe></div>
+<p class="center" style="margin-top:14px;color:var(--muted)">Having trouble with the form? <a class="tlink" href="{FORM_VIEW}" target="_blank" rel="noopener">Open it in a new tab →</a> or email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a></p>
+</div></section>
+
+<section><div class="wrap"><div class="grid2">
+<div class="card"><h3>Summer Program 2027</h3><p>Registration will be announced in the spring. Watch your email or check back here.</p><div class="m">Tee Zone Driving Range · Mondays</div></div>
+<div class="card g"><h3>2027 Tournaments</h3><p>Monday, August 23 and Monday, October 18 at Granite Ridge Golf Club, first tee 10:00 am. Groups of four, best ball, each participant paired with a volunteer. Registration opens in the summer.</p><div class="m">Subsidized fee</div></div>
+</div></div></section>''',
+     extra_head='<meta name="robots" content="noindex, nofollow">')
 
 print("built", [f for f in os.listdir(OUT) if f.endswith(".html")])
