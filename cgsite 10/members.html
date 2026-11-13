@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Members | Challenge Golf</title><meta name="description" content="Registration and sign-ups for Challenge Golf participants and volunteers."><link rel="icon" href="img/logo.jpg"><link rel="stylesheet" href="css/style.css?v=202611131803"></head>
+<title>Members | Challenge Golf</title><meta name="description" content="Registration and sign-ups for Challenge Golf participants and volunteers."><link rel="icon" href="img/logo.jpg"><link rel="stylesheet" href="css/style.css?v=202611131815"></head>
 <body><header class="sitehead" id="sitehead"><a class="skip" href="#main">Skip to content</a>
 <div class="wrap nav"><a class="brand" href="index.html"><span class="seal"><img src="img/logo.jpg" alt="Challenge Golf 35 Years logo"></span>Challenge Golf</a>
 <nav class="links" id="menu" aria-label="Main"><a href="index.html" class="">Home</a><a href="about.html" class="">About</a><a href="programs.html" class="">Programs</a><a href="events.html" class="">Schedule & Events</a><a href="cg35.html" class="hl">CG35 Gala</a><a href="gallery.html" class="">Gallery</a><a href="support.html" class="">Support Us</a><a href="contact.html" class="">Contact</a><a class="btn btn-mem on" href="members.html">Members</a><a class="btn btn-red" href="support.html#donate">Donate</a></nav>
@@ -64,6 +64,7 @@
 <div class="opts "><label class="opt"><input type="radio" name="entry.906993787" value="I understand and confirm acceptance of the Photo and Video Release Form listed above." required><span>I accept the Photo and Video Release</span></label><label class="opt"><input type="radio" name="entry.906993787" value="I choose not to accept the Photo and Video Release Form outlined above." required><span>I do not accept the Photo and Video Release</span></label></div>
 <div class="fg"><label class="rf full"><span>Your full name (electronic signature) <i>*</i></span><input type="text" name="entry.349016699" required><small>If you don't accept, type &ldquo;Don't Accept&rdquo;.</small></label><label class="rf"><span>If the participant is unable to sign: your full name, signing on their behalf <em>(optional)</em></span><input type="text" name="entry.1344938080"></label><label class="rf"><span>Relationship to the participant <em>(optional)</em></span><input type="text" name="entry.1972422483"></label><label class="rf"><span>Date <i>*</i></span><input type="date" name="date2" required></label></div>
 </fieldset>
+<label class="opt confirm"><input type="checkbox" id="sigconfirm" required><span>I confirm that I am the person named in this registration, or their legal guardian or authorized caregiver, and that the names typed above are my electronic signatures. <i>*</i></span></label>
 <input type="hidden" name="pageHistory" value=""><input type="hidden" name="fvv" value="1">
 <input type="hidden" name="entry.104537785_year"><input type="hidden" name="entry.104537785_month"><input type="hidden" name="entry.104537785_day">
 <input type="hidden" name="entry.358200624_year"><input type="hidden" name="entry.358200624_month"><input type="hidden" name="entry.358200624_day">
@@ -94,7 +95,7 @@ f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=nu
  var seen={};
  f.querySelectorAll('input,textarea').forEach(function(el){if(el.closest('[hidden]')||el.type==='hidden')return;
   if(el.type==='radio'){if(el.required&&!val(el.name)&&!seen[el.name]){seen[el.name]=1;bad(el,'Please choose an answer.');}return;}
-  if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,'Please accept the agreement.');return;}
+  if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,el.id==='sigconfirm'?'Please confirm your signature.':'Please accept the agreement.');return;}
   if(el.required&&!el.value.trim())bad(el,'Please fill in all required fields.');
   else if(el.type==='email'&&el.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()))bad(el,'Please check the email address.');});
  var oth=f['entry.556087404.other_option_response'];

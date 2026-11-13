@@ -383,6 +383,7 @@ REGFORM = f"""<form id="regform" class="regform" action="{FORM_POST}" method="PO
 {radios("entry.906993787", [("I understand and confirm acceptance of the Photo and Video Release Form listed above.","I accept the Photo and Video Release"),("I choose not to accept the Photo and Video Release Form outlined above.","I do not accept the Photo and Video Release")])}
 <div class="fg">{fld("Your full name (electronic signature)","entry.349016699",full=True,hint="If you don't accept, type &ldquo;Don't Accept&rdquo;.")}{fld(ONBEHALF,"entry.1344938080",req=False)}{fld("Relationship to the participant","entry.1972422483",req=False)}{fld("Date","date2",typ="date")}</div>
 </fieldset>
+<label class="opt confirm"><input type="checkbox" id="sigconfirm" required><span>I confirm that I am the person named in this registration, or their legal guardian or authorized caregiver, and that the names typed above are my electronic signatures. <i>*</i></span></label>
 <input type="hidden" name="pageHistory" value=""><input type="hidden" name="fvv" value="1">
 <input type="hidden" name="entry.104537785_year"><input type="hidden" name="entry.104537785_month"><input type="hidden" name="entry.104537785_day">
 <input type="hidden" name="entry.358200624_year"><input type="hidden" name="entry.358200624_month"><input type="hidden" name="entry.358200624_day">
@@ -412,7 +413,7 @@ f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=nu
  var seen={};
  f.querySelectorAll('input,textarea').forEach(function(el){if(el.closest('[hidden]')||el.type==='hidden')return;
   if(el.type==='radio'){if(el.required&&!val(el.name)&&!seen[el.name]){seen[el.name]=1;bad(el,'Please choose an answer.');}return;}
-  if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,'Please accept the agreement.');return;}
+  if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,el.id==='sigconfirm'?'Please confirm your signature.':'Please accept the agreement.');return;}
   if(el.required&&!el.value.trim())bad(el,'Please fill in all required fields.');
   else if(el.type==='email'&&el.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()))bad(el,'Please check the email address.');});
  var oth=f['entry.556087404.other_option_response'];
