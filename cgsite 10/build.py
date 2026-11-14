@@ -353,35 +353,38 @@ REGFORM = f"""<form id="regform" class="regform" action="#" novalidate>
 <fieldset><legend><b>1</b> About you</legend>
 <div class="fg">{fld("Email", "email", typ="email", extra=' autocomplete="email"', full=True, hint="Your confirmation copy will be sent here.")}</div>
 <div class="q"><span>I am registering as a <i>*</i></span>{radios("role", [("Participant","Participant"),("Volunteer","Volunteer")])}</div>
-<div class="q"><span>Which program are you registering for? <i>*</i></span>{radios("program", [("Winter Program 2027","Winter Program 2027 <small>Mondays, Jan 11 – Apr 19, 2027</small>"),("Summer Program 2027","Summer Program 2027 <small>Dates to be announced</small>")])}</div>
-<div class="q"><span>Have you registered for our program online before? <i>*</i></span>{radios("returning", [("Yes (Returning)","Yes, I'm returning"),("No (New)","No, I'm new")])}</div>
+<input type="hidden" name="program" value="Winter Program 2027">
+<div class="fg">{fld("First name (participant or volunteer)","first",extra=' autocomplete="given-name"')}{fld("Last name (participant or volunteer)","last",extra=' autocomplete="family-name"')}</div>
+<div class="q"><span>Who is completing this form? <i>*</i></span>{radios("completed_by", [("I am the participant or volunteer","I am the participant or volunteer"),("A caregiver or guardian, on behalf of the participant","A caregiver or guardian, on behalf of the participant")])}</div>
+<div class="q"><span>Have you registered with Challenge Golf before? <i>*</i></span>{radios("returning", [("Yes (Returning)","Yes, I'm returning"),("No (New)","No, I'm new")])}
+<p class="fhint newnote" data-show="newnote">New to Challenge Golf? Please make sure you have <a class="tlink" href="contact.html">contacted us to arrange a visit</a> before registering.</p></div>
 <div class="q" data-show="returning"><span>Has your contact or emergency contact information changed? <i>*</i></span>{radios("changed", [("Yes","Yes"),("No","No, it's the same")])}</div>
 </fieldset>
 <fieldset data-show="details"><legend><b>2</b> Your information</legend>
-<div class="fg">{fld("First name","first",extra=' autocomplete="given-name"')}{fld("Last name","last",extra=' autocomplete="family-name"')}
-{fld("Phone","phone",typ="tel",extra=' autocomplete="tel"')}{fld("Address","address",extra=' autocomplete="street-address"')}
+<div class="fg">{fld("Phone","phone",typ="tel",extra=' autocomplete="tel"')}{fld("Address","address",extra=' autocomplete="street-address"')}
 {fld("City","city",extra=' autocomplete="address-level2"')}{fld("Postal code","postal",extra=' autocomplete="postal-code"')}</div>
 <div class="q"><span>Dietary restriction <i>*</i></span>{radios("diet", [("None","None"),("Vegetarian","Vegetarian"),("Vegan","Vegan"),("Gluten-free","Gluten-free"),("Other","Other")], cls="row")}
 <label class="rf other" data-show="dietother"><span>Please describe <i>*</i></span><input type="text" name="diet_other"></label></div>
 <div class="fg">{fld("Comments","comments",req=False,typ="area",full=True)}</div>
 </fieldset>
 <fieldset data-show="details"><legend><b>3</b> Emergency contact</legend>
-<div class="fg">{fld("First name","ec_first")}{fld("Last name","ec_last")}{fld("Relationship","ec_rel")}{fld("Phone","ec_phone",typ="tel")}{fld("Email","ec_email",typ="email",full=True)}</div>
+<div class="fg">{fld("First name","ec_first")}{fld("Last name","ec_last")}{fld("Relationship","ec_rel")}{fld("Phone","ec_phone",typ="tel")}{fld("Email","ec_email",req=False,typ="email",full=True)}</div>
 </fieldset>
 <fieldset><legend><b>4</b> Dates you plan to attend</legend>
 <p class="fhint">Winter Program 2027: Mondays, 1–3 pm at Birdies Indoor Golf. No golf on Family Day (Feb 15, 2027) or Easter Monday (Mar 29, 2027).</p>
 <label class="opt all"><input type="checkbox" id="alldates"><span><b>I plan to attend all dates</b></span></label>
 <div class="opts dates">{"".join(f'<label class="opt"><input type="checkbox" name="dates" value="{d}"><span>{d[:6]}, {d[7:]}</span></label>' for d in WDATES)}</div>
+<div class="fg" style="margin-top:18px">{fld("Anything we should know to help you take part safely?","help_notes",req=False,typ="area",full=True)}</div>
 </fieldset>
 <fieldset><legend><b>5</b> Release and indemnification agreement</legend>
 <div class="legal"><p>{WAIVER}</p></div>
 <label class="opt"><input type="checkbox" name="waiver_ack" value="I understand and confirm acceptance of the agreement listed above." required><span>I understand and confirm acceptance of the agreement listed above. <i>*</i></span></label>
-<div class="fg">{fld("Your full name (electronic signature)","waiver_sig",full=True)}{fld(ONBEHALF,"waiver_proxy",req=False)}{fld("Relationship to the participant","waiver_rel",req=False)}{fld("Date","waiver_date",typ="date")}</div>
+<div class="fg">{fld("Electronic signature: full name of the person completing this form","waiver_sig",full=True)}<div class="rf full" data-show="caregiver">{fld("Your relationship to the participant","signer_rel")}</div>{fld("Date","waiver_date",typ="date")}</div>
 </fieldset>
 <fieldset><legend><b>6</b> Photo and video release</legend>
 <div class="legal">{PHOTO}</div>
 {radios("photo_choice", [("I understand and confirm acceptance of the Photo and Video Release Form listed above.","I accept the Photo and Video Release"),("I choose not to accept the Photo and Video Release Form outlined above.","I do not accept the Photo and Video Release")])}
-<div class="fg">{fld("Your full name (electronic signature)","photo_sig",full=True,hint="If you don't accept, type &ldquo;Don't Accept&rdquo;.")}{fld(ONBEHALF,"photo_proxy",req=False)}{fld("Relationship to the participant","photo_rel",req=False)}{fld("Date","photo_date",typ="date")}</div>
+<div class="fg">{fld("Electronic signature: full name of the person completing this form","photo_sig",full=True)}<div class="rf full" data-show="caregiver">{fld("Your relationship to the participant","photo_signer_rel")}</div>{fld("Date","photo_date",typ="date")}</div>
 </fieldset>
 <label class="opt confirm"><input type="checkbox" id="sigconfirm" name="sig_confirm" value="Confirmed: I am the person named, or their legal guardian or authorized caregiver, and the typed names are my electronic signatures." required><span>I confirm that I am the person named in this registration, or their legal guardian or authorized caregiver, and that the names typed above are my electronic signatures. <i>*</i></span></label>
 <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -401,6 +404,8 @@ function upd(){var ret=val('returning'),ch=val('changed');
  var showRet=ret.indexOf('Yes')===0, details=(ret.indexOf('No')===0)||(showRet&&ch==='Yes');
  f.querySelectorAll('[data-show="returning"]').forEach(function(e){e.hidden=!showRet});
  f.querySelectorAll('[data-show="details"]').forEach(function(e){e.hidden=!details});
+ f.querySelectorAll('[data-show="caregiver"]').forEach(function(e){e.hidden=val('completed_by').indexOf('caregiver')<0});
+ f.querySelectorAll('[data-show="newnote"]').forEach(function(e){e.hidden=ret.indexOf('No')!==0});
  f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('diet')!=='Other'});}
 f.addEventListener('change',upd);upd();
 var all=document.getElementById('alldates'),ds=f.querySelectorAll('.dates input');
