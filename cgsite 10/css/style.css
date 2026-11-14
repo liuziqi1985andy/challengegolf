@@ -444,3 +444,4 @@ section.tight{padding-top:40px}
 }
 .regform .opt.confirm{margin:0 0 18px;background:#fff8e8;border-color:#f0c47a;font-weight:600}
 .regform .opt.confirm:has(input:checked){background:#eef7e2;border-color:var(--green)}
+.regform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
