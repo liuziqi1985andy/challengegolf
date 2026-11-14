@@ -349,67 +349,65 @@ PHOTO = ("<p>I grant Challenge Golf permission to use my recorded image, likenes
          "<p>By signing this release, I understand that my permission signifies that photographic or video recordings of me may be electronically displayed via the Internet or in a public setting. These recordings may be used for the following purposes: social media, educational videos, informational presentations, conference presentations, online educational courses, and educational presentations or courses.</p>"
          "<p>I acknowledge that there is no time limit on the validity of this release, nor is there any geographic limitation on where these materials may be distributed. By signing this release, I confirm that I have completely read and fully understand the above release and agree to be bound by it. I hereby release any and all claims against any person or organization utilizing this material for informational or educational purposes.</p>")
 ONBEHALF = "If the participant is unable to sign: your full name, signing on their behalf"
-REGFORM = f"""<form id="regform" class="regform" action="{FORM_POST}" method="POST" target="reg_sink" novalidate>
+REGFORM = f"""<form id="regform" class="regform" action="#" novalidate>
 <fieldset><legend><b>1</b> About you</legend>
-<div class="fg">{fld("Email", "emailAddress", typ="email", extra=' autocomplete="email"', full=True, hint="Your confirmation copy will be sent here.")}</div>
-<div class="q"><span>I am registering as a <i>*</i></span>{radios("entry.155881205", [("Participant","Participant"),("Volunteer","Volunteer")])}</div>
-<div class="q"><span>Which program are you registering for? <i>*</i></span>{radios("entry.1247347670", [("Winter Program 2027","Winter Program 2027 <small>Mondays, Jan 11 – Apr 19, 2027</small>"),("Summer Program 2027","Summer Program 2027 <small>Dates to be announced</small>")])}</div>
-<div class="q"><span>Have you registered for our program online before? <i>*</i></span>{radios("entry.625157265", [("Yes (Returning)","Yes, I'm returning"),("No (New)","No, I'm new")])}</div>
-<div class="q" data-show="returning"><span>Has your contact or emergency contact information changed? <i>*</i></span>{radios("entry.863878588", [("Yes","Yes"),("No","No, it's the same")])}</div>
+<div class="fg">{fld("Email", "email", typ="email", extra=' autocomplete="email"', full=True, hint="Your confirmation copy will be sent here.")}</div>
+<div class="q"><span>I am registering as a <i>*</i></span>{radios("role", [("Participant","Participant"),("Volunteer","Volunteer")])}</div>
+<div class="q"><span>Which program are you registering for? <i>*</i></span>{radios("program", [("Winter Program 2027","Winter Program 2027 <small>Mondays, Jan 11 – Apr 19, 2027</small>"),("Summer Program 2027","Summer Program 2027 <small>Dates to be announced</small>")])}</div>
+<div class="q"><span>Have you registered for our program online before? <i>*</i></span>{radios("returning", [("Yes (Returning)","Yes, I'm returning"),("No (New)","No, I'm new")])}</div>
+<div class="q" data-show="returning"><span>Has your contact or emergency contact information changed? <i>*</i></span>{radios("changed", [("Yes","Yes"),("No","No, it's the same")])}</div>
 </fieldset>
 <fieldset data-show="details"><legend><b>2</b> Your information</legend>
-<div class="fg">{fld("First name","entry.582226185",extra=' autocomplete="given-name"')}{fld("Last name","entry.855444910",extra=' autocomplete="family-name"')}
-{fld("Phone","entry.1422363565",typ="tel",extra=' autocomplete="tel"')}{fld("Address","entry.639476172",extra=' autocomplete="street-address"')}
-{fld("City","entry.1211851042",extra=' autocomplete="address-level2"')}{fld("Postal code","entry.705078771",extra=' autocomplete="postal-code"')}</div>
-<div class="q"><span>Dietary restriction <i>*</i></span>{radios("entry.556087404", [("None","None"),("Vegetarian","Vegetarian"),("Vegan","Vegan"),("Gluten-free","Gluten-free"),("__other_option__","Other")], cls="row")}
-<label class="rf other" data-show="dietother"><span>Please describe <i>*</i></span><input type="text" name="entry.556087404.other_option_response"></label></div>
-<div class="fg">{fld("Comments","entry.1246653210",req=False,typ="area",full=True)}</div>
+<div class="fg">{fld("First name","first",extra=' autocomplete="given-name"')}{fld("Last name","last",extra=' autocomplete="family-name"')}
+{fld("Phone","phone",typ="tel",extra=' autocomplete="tel"')}{fld("Address","address",extra=' autocomplete="street-address"')}
+{fld("City","city",extra=' autocomplete="address-level2"')}{fld("Postal code","postal",extra=' autocomplete="postal-code"')}</div>
+<div class="q"><span>Dietary restriction <i>*</i></span>{radios("diet", [("None","None"),("Vegetarian","Vegetarian"),("Vegan","Vegan"),("Gluten-free","Gluten-free"),("Other","Other")], cls="row")}
+<label class="rf other" data-show="dietother"><span>Please describe <i>*</i></span><input type="text" name="diet_other"></label></div>
+<div class="fg">{fld("Comments","comments",req=False,typ="area",full=True)}</div>
 </fieldset>
 <fieldset data-show="details"><legend><b>3</b> Emergency contact</legend>
-<div class="fg">{fld("First name","entry.1765119339")}{fld("Last name","entry.1180003187")}{fld("Relationship","entry.1901088595")}{fld("Phone","entry.1747550302",typ="tel")}{fld("Email","entry.604465405",typ="email",full=True)}</div>
+<div class="fg">{fld("First name","ec_first")}{fld("Last name","ec_last")}{fld("Relationship","ec_rel")}{fld("Phone","ec_phone",typ="tel")}{fld("Email","ec_email",typ="email",full=True)}</div>
 </fieldset>
 <fieldset><legend><b>4</b> Dates you plan to attend</legend>
 <p class="fhint">Winter Program 2027: Mondays, 1–3 pm at Birdies Indoor Golf. No golf on Family Day (Feb 15, 2027) or Easter Monday (Mar 29, 2027).</p>
 <label class="opt all"><input type="checkbox" id="alldates"><span><b>I plan to attend all dates</b></span></label>
-<div class="opts dates">{"".join(f'<label class="opt"><input type="checkbox" name="entry.1338111941" value="{d}"><span>{d[:6]}, {d[7:]}</span></label>' for d in WDATES)}</div>
+<div class="opts dates">{"".join(f'<label class="opt"><input type="checkbox" name="dates" value="{d}"><span>{d[:6]}, {d[7:]}</span></label>' for d in WDATES)}</div>
 </fieldset>
 <fieldset><legend><b>5</b> Release and indemnification agreement</legend>
 <div class="legal"><p>{WAIVER}</p></div>
-<label class="opt"><input type="checkbox" name="entry.1530836672" value="I understand and confirm acceptance of the agreement listed above." required><span>I understand and confirm acceptance of the agreement listed above. <i>*</i></span></label>
-<div class="fg">{fld("Your full name (electronic signature)","entry.729129411",full=True)}{fld(ONBEHALF,"entry.1684059601",req=False)}{fld("Relationship to the participant","entry.467638664",req=False)}{fld("Date","date1",typ="date")}</div>
+<label class="opt"><input type="checkbox" name="waiver_ack" value="I understand and confirm acceptance of the agreement listed above." required><span>I understand and confirm acceptance of the agreement listed above. <i>*</i></span></label>
+<div class="fg">{fld("Your full name (electronic signature)","waiver_sig",full=True)}{fld(ONBEHALF,"waiver_proxy",req=False)}{fld("Relationship to the participant","waiver_rel",req=False)}{fld("Date","waiver_date",typ="date")}</div>
 </fieldset>
 <fieldset><legend><b>6</b> Photo and video release</legend>
 <div class="legal">{PHOTO}</div>
-{radios("entry.906993787", [("I understand and confirm acceptance of the Photo and Video Release Form listed above.","I accept the Photo and Video Release"),("I choose not to accept the Photo and Video Release Form outlined above.","I do not accept the Photo and Video Release")])}
-<div class="fg">{fld("Your full name (electronic signature)","entry.349016699",full=True,hint="If you don't accept, type &ldquo;Don't Accept&rdquo;.")}{fld(ONBEHALF,"entry.1344938080",req=False)}{fld("Relationship to the participant","entry.1972422483",req=False)}{fld("Date","date2",typ="date")}</div>
+{radios("photo_choice", [("I understand and confirm acceptance of the Photo and Video Release Form listed above.","I accept the Photo and Video Release"),("I choose not to accept the Photo and Video Release Form outlined above.","I do not accept the Photo and Video Release")])}
+<div class="fg">{fld("Your full name (electronic signature)","photo_sig",full=True,hint="If you don't accept, type &ldquo;Don't Accept&rdquo;.")}{fld(ONBEHALF,"photo_proxy",req=False)}{fld("Relationship to the participant","photo_rel",req=False)}{fld("Date","photo_date",typ="date")}</div>
 </fieldset>
-<label class="opt confirm"><input type="checkbox" id="sigconfirm" required><span>I confirm that I am the person named in this registration, or their legal guardian or authorized caregiver, and that the names typed above are my electronic signatures. <i>*</i></span></label>
-<input type="hidden" name="pageHistory" value=""><input type="hidden" name="fvv" value="1">
-<input type="hidden" name="entry.104537785_year"><input type="hidden" name="entry.104537785_month"><input type="hidden" name="entry.104537785_day">
-<input type="hidden" name="entry.358200624_year"><input type="hidden" name="entry.358200624_month"><input type="hidden" name="entry.358200624_day">
+<label class="opt confirm"><input type="checkbox" id="sigconfirm" name="sig_confirm" value="Confirmed: I am the person named, or their legal guardian or authorized caregiver, and the typed names are my electronic signatures." required><span>I confirm that I am the person named in this registration, or their legal guardian or authorized caregiver, and that the names typed above are my electronic signatures. <i>*</i></span></label>
+<div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 <div class="ferr" id="ferr" role="alert" hidden></div>
 <button class="btn btn-red big" type="submit" id="regsubmit">Submit registration</button>
 <p class="fhint">By submitting, you confirm the information above is correct. No Google account is needed.</p>
 </form>
-<iframe name="reg_sink" id="reg_sink" title="Form submission" hidden></iframe>
-<div class="regdone" id="regdone" hidden tabindex="-1"><h3>Thank you, you're registered!</h3><p>We've received your registration for the 2027 program. A confirmation copy will be sent to your email. If you have any questions, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div>"""
-USE_NATIVE = False  # native form needs Google's "send responders a copy" turned off (reCAPTCHA)
+<div class="regdone" id="regdone" hidden tabindex="-1"><h3>Thank you, you're registered!</h3><p>We've received your registration. A confirmation email with a copy of your answers is on its way. Please check your spam folder if you don't see it. If you have any questions, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div>"""
+USE_NATIVE = True  # on-page form posts to the Challenge Golf Website Registration Apps Script
 EMBED = f'<div class="formbox" id="formbox"><iframe id="gform" src="{FORM_VIEW}?embedded=true" title="2027 Winter Program Registration - Challenge Golf">Loading…</iframe></div>'
 EMBED_JS = """<script>(function(){var f=document.getElementById('gform'),n=0;if(!f)return;f.addEventListener('load',function(){if(++n>1){var y=document.getElementById('formbox').getBoundingClientRect().top+window.pageYOffset-90;window.scrollTo({top:y,behavior:'smooth'});}});})();</script>"""
 REG_JS = r"""<script>(function(){
+var ENDPOINT='https://script.google.com/macros/s/AKfycbyhQZaWNkRIn-5wwjLmVNMmtg1RXDHmflhCB2a4eZmj07KKTMpmY1AJ-GMseeKXNH6x/exec',GFORM='https://docs.google.com/forms/d/e/1FAIpQLSdzyD_z11kPYILqpK6kkfyDNPWa81xWXZSpGZPGzhaf4RF1DA/viewform';
 var f=document.getElementById('regform');if(!f)return;
 function val(n){var e=f.querySelector('[name="'+n+'"]:checked');return e?e.value:'';}
-function upd(){var ret=val('entry.625157265'),ch=val('entry.863878588');
+function upd(){var ret=val('returning'),ch=val('changed');
  var showRet=ret.indexOf('Yes')===0, details=(ret.indexOf('No')===0)||(showRet&&ch==='Yes');
  f.querySelectorAll('[data-show="returning"]').forEach(function(e){e.hidden=!showRet});
  f.querySelectorAll('[data-show="details"]').forEach(function(e){e.hidden=!details});
- f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('entry.556087404')!=='__other_option__'});}
+ f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('diet')!=='Other'});}
 f.addEventListener('change',upd);upd();
 var all=document.getElementById('alldates'),ds=f.querySelectorAll('.dates input');
 all.addEventListener('change',function(){ds.forEach(function(d){d.checked=all.checked})});
 ds.forEach(function(d){d.addEventListener('change',function(){all.checked=[].every.call(ds,function(x){return x.checked})})});
 var t=new Date(),iso=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
-f.date1.value=iso;f.date2.value=iso;
+f.waiver_date.value=iso;f.photo_date.value=iso;
 f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=null;
  f.querySelectorAll('.bad').forEach(function(e){e.classList.remove('bad')});
  function bad(el,msg){var box=el.closest('.q,.rf,.opt,fieldset');box.classList.add('bad');if(!first)first=box;err.push(msg);}
@@ -419,21 +417,22 @@ f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=nu
   if(el.type==='checkbox'){if(el.required&&!el.checked)bad(el,el.id==='sigconfirm'?'Please confirm your signature.':'Please accept the agreement.');return;}
   if(el.required&&!el.value.trim())bad(el,'Please fill in all required fields.');
   else if(el.type==='email'&&el.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()))bad(el,'Please check the email address.');});
- var oth=f['entry.556087404.other_option_response'];
+ var oth=f['diet_other'];
  if(!oth.closest('[hidden]')&&!oth.value.trim())bad(oth,'Please describe your dietary restriction.');
  if(!f.querySelector('.dates input:checked'))bad(f.querySelector('.dates input'),'Please choose at least one date.');
  var E=document.getElementById('ferr');
  if(err.length){E.textContent='Please check the highlighted items. '+err.filter(function(x,i,a){return a.indexOf(x)===i}).join(' ');E.hidden=false;first.scrollIntoView({behavior:'smooth',block:'center'});return;}
  E.hidden=true;
- var ret=val('entry.625157265'),ch=val('entry.863878588'),ph;
- if(ret.indexOf('No')===0)ph='0,1,2,4,5,6,7,8';else if(ch==='Yes')ph='0,1,2,3,4,5,6,7,8';else ph='0,1,2,3,6,7,8';
- f.pageHistory.value=ph;
- [['date1','104537785'],['date2','358200624']].forEach(function(p){var d=f[p[0]].value.split('-');f['entry.'+p[1]+'_year'].value=d[0];f['entry.'+p[1]+'_month'].value=+d[1];f['entry.'+p[1]+'_day'].value=+d[2];});
- f.querySelectorAll('[hidden] input,[hidden] textarea').forEach(function(el){el.disabled=true});
- f.date1.disabled=true;f.date2.disabled=true;all.disabled=true;
+ var data={};
+ f.querySelectorAll('input,textarea').forEach(function(el){if(!el.name||el.closest('[hidden]'))return;
+  if((el.type==='radio'||el.type==='checkbox')&&!el.checked)return;
+  var v=el.value.trim();if(el.name==='dates'){(data.dates=data.dates||[]).push(v);return;}data[el.name]=v;});
+ if(data.diet==='Other')data.diet='Other: '+(data.diet_other||'');delete data.diet_other;
  var b=document.getElementById('regsubmit');b.disabled=true;b.textContent='Sending…';
- f.submit();
- setTimeout(function(){f.hidden=true;var d=document.getElementById('regdone');d.hidden=false;d.scrollIntoView({behavior:'smooth',block:'center'});},1500);
+ fetch(ENDPOINT,{method:'POST',body:JSON.stringify(data)}).then(function(r){return r.json()}).then(function(res){
+  if(!res.ok)throw new Error(res.error||'error');
+  f.hidden=true;var d=document.getElementById('regdone');d.hidden=false;d.scrollIntoView({behavior:'smooth',block:'center'});
+ }).catch(function(){b.disabled=false;b.textContent='Submit registration';E.innerHTML='Sorry, something went wrong and your registration was not sent. Please try again, or <a class="tlink" href="'+GFORM+'" target="_blank" rel="noopener">use the Google Form instead</a>.';E.hidden=false;E.scrollIntoView({behavior:'smooth',block:'center'});});
 });
 })();</script>"""
 
