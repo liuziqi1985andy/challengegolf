@@ -87,10 +87,19 @@ document.querySelectorAll('.video[data-yt]').forEach(function(v){v.addEventListe
  v.classList.add('playing');v.replaceChildren(f);});});
 </script>"""
 
+SETTINGS_URL = "https://script.google.com/macros/s/AKfycbyhQZaWNkRIn-5wwjLmVNMmtg1RXDHmflhCB2a4eZmj07KKTMpmY1AJ-GMseeKXNH6x/exec?action=settings"
+SETTINGS_JS = """<script>(function(){
+var K='cgset',s=null;try{var c=JSON.parse(sessionStorage.getItem(K)||'null');if(c&&Date.now()-c.t<300000)s=c.d;}catch(e){}
+window.cgSettings=s?Promise.resolve(s):fetch('""" + SETTINGS_URL + """').then(function(r){return r.json()}).then(function(d){try{sessionStorage.setItem(K,JSON.stringify({t:Date.now(),d:d}))}catch(e){}return d}).catch(function(){return null});
+window.cgSettings.then(function(d){if(!d||!d.announcements||!d.announcements.length)return;var b=document.getElementById('cgbanner');if(!b)return;
+ b.innerHTML=d.announcements.map(function(a){var e=document.createElement('div');e.className='cgb';var p=document.createElement('span');p.textContent=a.msg;e.appendChild(p);
+  if(a.url&&a.url.indexOf('http')===0){var l=document.createElement('a');l.href=a.url;l.textContent=(a.link_text||'Learn more')+' \u2192';e.appendChild(l);}return e.outerHTML}).join('');b.hidden=false;});
+})();</script>"""
+
 def page(fname, title, desc, hero, main, extra_head=""):
     html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{extra_head}
 <title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css?v={VERSION}"></head>
-<body><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}</body></html>'''
+<body><div class="cgbanner" id="cgbanner" hidden></div><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}{SETTINGS_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
 
 HERO_IMG = {"Members": ("winter-team", "50% 50%"), "About us": ("group-lanai", "50% 50%"), "Programs": ("range-lineup", "50% 60%"), "Events": ("putting-green-four", "50% 45%"),
@@ -344,7 +353,7 @@ def fld(label, name, req=True, typ="text", extra="", full=False, hint=""):
     return f'<label class="rf{" full" if full else ""}"><span>{label}{star}</span>{ctl}{"<small>"+hint+"</small>" if hint else ""}</label>'
 def radios(name, opts, req=True, cls=""):
     return '<div class="opts '+cls+'">' + "".join(f'<label class="opt"><input type="radio" name="{name}" value="{v}"{" required" if req else ""}><span>{t}</span></label>' for v, t in opts) + '</div>'
-WAIVER = ("In consideration of being allowed to participate in the winter indoor golf sessions (hereinafter referred to as \"the activities\") hosted by Golf for the Physically Challenged (hereinafter referred to as \"Challenge Golf\") at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville, ON L6H 3K4), I (hereinafter referred to as 'the participant', whether registering as a participant or a volunteer), hereby acknowledge and agree to release and forever discharge Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of action, suits, claims, and demands for damages which may be sustained by the participant in consequence of participating in the activities. The undersigned further agrees to indemnify and save harmless Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of actions, suits, claims, and demands that may be brought by any person regarding damages sustained by the participant, the participant's spouse, or their family/families in consequence of participating in the activities.")
+WAIVER = ("In consideration of being allowed to participate in the <span id=\"reg-activity\">winter indoor golf sessions</span> (hereinafter referred to as \"the activities\") hosted by Golf for the Physically Challenged (hereinafter referred to as \"Challenge Golf\") at <span id=\"reg-venue\">Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville, ON L6H 3K4)</span>, I (hereinafter referred to as 'the participant', whether registering as a participant or a volunteer), hereby acknowledge and agree to release and forever discharge Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of action, suits, claims, and demands for damages which may be sustained by the participant in consequence of participating in the activities. The undersigned further agrees to indemnify and save harmless Challenge Golf, their officers, and agents, as well as the heirs, executors, administrators, and assigns of the said officers and agents, from any and all actions, causes of actions, suits, claims, and demands that may be brought by any person regarding damages sustained by the participant, the participant's spouse, or their family/families in consequence of participating in the activities.")
 PHOTO = ("<p>I grant Challenge Golf permission to use my recorded image, likeness, and voice without payment or any other consideration. I understand that my image may be copied, exhibited, published, edited, or distributed, and I waive the right to inspect or approve the finished product where my likeness appears. I also waive any right to royalties or other compensation arising or related to the use of my image or recording.</p>"
          "<p>By signing this release, I understand that my permission signifies that photographic or video recordings of me may be electronically displayed via the Internet or in a public setting. These recordings may be used for the following purposes: social media, educational videos, informational presentations, conference presentations, online educational courses, and educational presentations or courses.</p>"
          "<p>I acknowledge that there is no time limit on the validity of this release, nor is there any geographic limitation on where these materials may be distributed. By signing this release, I confirm that I have completely read and fully understand the above release and agree to be bound by it. I hereby release any and all claims against any person or organization utilizing this material for informational or educational purposes.</p>")
@@ -371,7 +380,7 @@ REGFORM = f"""<form id="regform" class="regform" action="#" novalidate>
 <div class="fg">{fld("First name","ec_first")}{fld("Last name","ec_last")}{fld("Relationship","ec_rel")}{fld("Phone","ec_phone",typ="tel")}{fld("Email","ec_email",req=False,typ="email",full=True)}</div>
 </fieldset>
 <fieldset><legend><b>4</b> Dates you plan to attend</legend>
-<p class="fhint">Winter Program 2027: Mondays, 1–3 pm at Birdies Indoor Golf. No golf on Family Day (Feb 15, 2027) or Easter Monday (Mar 29, 2027).</p>
+<p class="fhint" id="reg-datesnote">Mondays, 1–3 pm at Birdies Indoor Golf. No golf on Family Day (Feb 15, 2027) or Easter Monday (Mar 29, 2027).</p>
 <label class="opt all"><input type="checkbox" id="alldates"><span><b>I plan to attend all dates</b></span></label>
 <div class="opts dates">{"".join(f'<label class="opt"><input type="checkbox" name="dates" value="{d}"><span>{d[:6]}, {d[7:]}</span></label>' for d in WDATES)}</div>
 <div class="fg" style="margin-top:18px">{fld("Anything we should know to help you take part safely?","help_notes",req=False,typ="area",full=True)}</div>
@@ -408,9 +417,20 @@ function upd(){var ret=val('returning'),ch=val('changed');
  f.querySelectorAll('[data-show="newnote"]').forEach(function(e){e.hidden=ret.indexOf('No')!==0});
  f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('diet')!=='Other'});}
 f.addEventListener('change',upd);upd();
-var all=document.getElementById('alldates'),ds=f.querySelectorAll('.dates input');
-all.addEventListener('change',function(){ds.forEach(function(d){d.checked=all.checked})});
-ds.forEach(function(d){d.addEventListener('change',function(){all.checked=[].every.call(ds,function(x){return x.checked})})});
+var all=document.getElementById('alldates');
+function ds(){return f.querySelectorAll('.dates input');}
+all.addEventListener('change',function(){ds().forEach(function(d){d.checked=all.checked})});
+f.querySelector('.dates').addEventListener('change',function(){all.checked=[].every.call(ds(),function(x){return x.checked})});
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function txt(id,v){var e=document.getElementById(id);if(e&&v)e.textContent=v;}
+document.addEventListener('DOMContentLoaded',function(){(window.cgSettings||Promise.resolve(null)).then(function(s){if(!s||!s.program)return;
+ txt('reg-title',s.program+' Registration');txt('reg-schedule',s.schedule);txt('reg-datesnote',s.dates_note);
+ txt('reg-activity',s.activity);txt('reg-venue',s.venue);f.program.value=s.program;
+ if(s.welcome){var w=document.getElementById('reg-welcome');w.innerHTML=s.welcome.split(/\n+/).map(function(p){return '<p>'+esc(p)+'</p>'}).join('');}
+ if(s.dates&&s.dates.length){f.querySelector('.dates').innerHTML=s.dates.map(function(d){var p=d.split(' ');var lab=p.length===3?p[0]+' '+p[1]+', '+p[2]:d;return '<label class="opt"><input type="checkbox" name="dates" value="'+esc(d)+'"><span>'+esc(lab)+'</span></label>'}).join('');all.checked=false;}
+ if(!s.open){f.hidden=true;txt('reg-k','Registration closed');var c=document.getElementById('reg-closed');c.textContent=s.closed_msg||'Registration is currently closed.';c.hidden=false;
+  var w2=document.querySelector('details.welcome');if(w2)w2.hidden=true;}
+});});
 var t=new Date(),iso=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
 f.waiver_date.value=iso;f.photo_date.value=iso;
 f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=null;
@@ -424,7 +444,7 @@ f.addEventListener('submit',function(ev){ev.preventDefault();var err=[],first=nu
   else if(el.type==='email'&&el.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value.trim()))bad(el,'Please check the email address.');});
  var oth=f['diet_other'];
  if(!oth.closest('[hidden]')&&!oth.value.trim())bad(oth,'Please describe your dietary restriction.');
- if(!f.querySelector('.dates input:checked'))bad(f.querySelector('.dates input'),'Please choose at least one date.');
+ if(f.querySelector('.dates input')&&!f.querySelector('.dates input:checked'))bad(f.querySelector('.dates input'),'Please choose at least one date.');
  var E=document.getElementById('ferr');
  if(err.length){E.textContent='Please check the highlighted items. '+err.filter(function(x,i,a){return a.indexOf(x)===i}).join(' ');E.hidden=false;first.scrollIntoView({behavior:'smooth',block:'center'});return;}
  E.hidden=true;
@@ -464,9 +484,10 @@ page("members.html", "Members | Challenge Golf", "Registration and sign-ups for 
 </div></div></section>
 
 <section class="white" id="winter-registration"><div class="wrap"><div class="center" style="max-width:760px;margin:0 auto">
-<span class="sec-k">Now open</span><h2>2027 Winter Program Registration</h2>
-<p class="lead">For participants and volunteers. Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8. New to Challenge Golf? <a class="tlink" href="contact.html">Arrange a visit first.</a></p>
-<details class="welcome"><summary>Read the 2027 welcome letter</summary><div><p>Hello everyone,</p><p>We hope you all enjoyed our summer session! To help everyone stay active during the winter months, our Winter Indoor Golf Program will begin again on Monday, January 11, 2027. The program runs Mondays from 1:00 to 3:00 pm at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville), for 13 sessions between January 11 and April 19, 2027 (no golf on Family Day, February 15, or Easter Monday, March 29).</p><p><b>Celebrating 35 years!</b> Join us at our 35th Anniversary Celebration on Saturday, April 17, 2027, 2–9 pm at the Oakville Conference Centre. Participants, volunteers, family and friends are all welcome. <a class="tlink" href="cg35.html">Get your tickets →</a></p><p>By registering online you accept the terms of online registration. If you'd prefer a mail-in form, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></details>
+<span class="sec-k" id="reg-k">Now open</span><h2 id="reg-title">Winter Program 2027 Registration</h2>
+<p class="lead">For participants and volunteers. <span id="reg-schedule">Mondays, 1–3 pm, January 11 to April 19, 2027 at Birdies Indoor Golf Oakville, 504 Iroquois Shore Rd, Unit 8.</span> New to Challenge Golf? <a class="tlink" href="contact.html">Arrange a visit first.</a></p>
+<p class="regclosed" id="reg-closed" hidden></p>
+<details class="welcome"><summary>Read the welcome letter</summary><div id="reg-welcome"><p>Hello everyone,</p><p>We hope you all enjoyed our summer session! To help everyone stay active during the winter months, our Winter Indoor Golf Program will begin again on Monday, January 11, 2027. The program runs Mondays from 1:00 to 3:00 pm at Birdies Indoor Golf (504 Iroquois Shore Rd, Unit 8, Oakville), for 13 sessions between January 11 and April 19, 2027 (no golf on Family Day, February 15, or Easter Monday, March 29).</p><p><b>Celebrating 35 years!</b> Join us at our 35th Anniversary Celebration on Saturday, April 17, 2027, 2–9 pm at the Oakville Conference Centre. Participants, volunteers, family and friends are all welcome. <a class="tlink" href="cg35.html">Get your tickets →</a></p><p>By registering online you accept the terms of online registration. If you'd prefer a mail-in form, email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></details>
 </div>
 {REGFORM if USE_NATIVE else EMBED}
 <p class="center" style="margin-top:18px;color:var(--muted)">Having trouble? <a class="tlink" href="{FORM_VIEW}" target="_blank" rel="noopener">Use the Google Form instead →</a> or email <a class="tlink" href="mailto:{EMAIL}">{EMAIL}</a></p>
