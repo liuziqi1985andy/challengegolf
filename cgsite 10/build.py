@@ -416,7 +416,14 @@ function upd(){var ret=val('returning'),ch=val('changed');
  f.querySelectorAll('[data-show="caregiver"]').forEach(function(e){e.hidden=val('completed_by').indexOf('caregiver')<0});
  f.querySelectorAll('[data-show="newnote"]').forEach(function(e){e.hidden=ret.indexOf('No')!==0});
  f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('diet')!=='Other'});}
-f.addEventListener('change',upd);upd();
+var shown=false;
+function goTo(el){var h=document.getElementById('sitehead');var off=(h?h.getBoundingClientRect().height:0)+12;
+ var y=el.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo({top:y,behavior:'smooth'});}
+f.addEventListener('change',function(ev){upd();
+ var sec=f.querySelector('fieldset[data-show="details"]');var now=sec&&!sec.hidden;
+ if(now&&!shown&&ev.target&&(ev.target.name==='returning'||ev.target.name==='changed'))setTimeout(function(){goTo(sec)},60);
+ shown=now;});
+upd();
 var all=document.getElementById('alldates');
 function ds(){return f.querySelectorAll('.dates input');}
 all.addEventListener('change',function(){ds().forEach(function(d){d.checked=all.checked})});

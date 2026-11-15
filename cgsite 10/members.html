@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Members | Challenge Golf</title><meta name="description" content="Registration and sign-ups for Challenge Golf participants and volunteers."><link rel="icon" href="img/logo.jpg"><link rel="stylesheet" href="css/style.css?v=202611141934"></head>
+<title>Members | Challenge Golf</title><meta name="description" content="Registration and sign-ups for Challenge Golf participants and volunteers."><link rel="icon" href="img/logo.jpg"><link rel="stylesheet" href="css/style.css?v=202611142002"></head>
 <body><div class="cgbanner" id="cgbanner" hidden></div><header class="sitehead" id="sitehead"><a class="skip" href="#main">Skip to content</a>
 <div class="wrap nav"><a class="brand" href="index.html"><span class="seal"><img src="img/logo.jpg" alt="Challenge Golf 35 Years logo"></span>Challenge Golf</a>
 <nav class="links" id="menu" aria-label="Main"><a href="index.html" class="">Home</a><a href="about.html" class="">About</a><a href="programs.html" class="">Programs</a><a href="events.html" class="">Schedule & Events</a><a href="cg35.html" class="hl">CG35 Gala</a><a href="gallery.html" class="">Gallery</a><a href="support.html" class="">Support Us</a><a href="contact.html" class="">Contact</a><a class="btn btn-mem on" href="members.html">Members</a><a class="btn btn-red" href="support.html#donate">Donate</a></nav>
@@ -87,7 +87,14 @@ function upd(){var ret=val('returning'),ch=val('changed');
  f.querySelectorAll('[data-show="caregiver"]').forEach(function(e){e.hidden=val('completed_by').indexOf('caregiver')<0});
  f.querySelectorAll('[data-show="newnote"]').forEach(function(e){e.hidden=ret.indexOf('No')!==0});
  f.querySelectorAll('[data-show="dietother"]').forEach(function(e){e.hidden=val('diet')!=='Other'});}
-f.addEventListener('change',upd);upd();
+var shown=false;
+function goTo(el){var h=document.getElementById('sitehead');var off=(h?h.getBoundingClientRect().height:0)+12;
+ var y=el.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo({top:y,behavior:'smooth'});}
+f.addEventListener('change',function(ev){upd();
+ var sec=f.querySelector('fieldset[data-show="details"]');var now=sec&&!sec.hidden;
+ if(now&&!shown&&ev.target&&(ev.target.name==='returning'||ev.target.name==='changed'))setTimeout(function(){goTo(sec)},60);
+ shown=now;});
+upd();
 var all=document.getElementById('alldates');
 function ds(){return f.querySelectorAll('.dates input');}
 all.addEventListener('change',function(){ds().forEach(function(d){d.checked=all.checked})});
