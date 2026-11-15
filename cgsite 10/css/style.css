@@ -445,3 +445,8 @@ section.tight{padding-top:40px}
 .regform .opt.confirm{margin:0 0 18px;background:#fff8e8;border-color:#f0c47a;font-weight:600}
 .regform .opt.confirm:has(input:checked){background:#eef7e2;border-color:var(--green)}
 .regform .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cgbanner{background:#f0a33a;color:#2b1a00;font-weight:600;font-size:15px;text-align:center}
+.cgbanner .cgb{padding:9px 16px;line-height:1.4}.cgbanner .cgb+.cgb{border-top:1px solid rgba(0,0,0,.12)}
+.cgbanner a{color:#2b1a00;text-decoration:underline;margin-left:10px;white-space:nowrap}
+.regclosed{background:#fff4e5;border:2px solid #f0a33a;border-radius:14px;padding:18px 22px;font-weight:600;margin-top:18px}
+form[hidden],.regform[hidden],.regdone[hidden]{display:none!important}
