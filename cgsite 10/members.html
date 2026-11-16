@@ -100,7 +100,9 @@ function goTo(el){var h=document.getElementById('sitehead');var off=(h?h.getBoun
  var y=el.getBoundingClientRect().top+window.pageYOffset-off;window.scrollTo({top:y,behavior:'smooth'});}
 f.addEventListener('change',function(ev){upd();
  var sec=f.querySelector('fieldset[data-show="details"]');var now=sec&&!sec.hidden;
- if(now&&!shown&&ev.target&&(ev.target.name==='returning'||ev.target.name==='changed'))setTimeout(function(){goTo(sec)},60);
+ var share=f.querySelector('fieldset.share');
+ if(ev.target&&ev.target.name==='changed'&&share&&!share.hidden)setTimeout(function(){goTo(share)},60);
+ else if(now&&!shown&&ev.target&&ev.target.name==='returning')setTimeout(function(){goTo(sec)},60);
  shown=now;});
 upd();
 var all=document.getElementById('alldates');
