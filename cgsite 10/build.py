@@ -369,6 +369,14 @@ REGFORM = f"""<form id="regform" class="regform" action="#" novalidate>
 <p class="fhint newnote" data-show="newnote">New to Challenge Golf? Please make sure you have <a class="tlink" href="contact.html">contacted us to arrange a visit</a> before registering.</p></div>
 <div class="q" data-show="returning"><span>Has your contact or emergency contact information changed? <i>*</i></span>{radios("changed", [("Yes","Yes"),("No","No, it's the same")])}</div>
 </fieldset>
+<fieldset data-show="returning" class="share"><legend><b>★</b> Share your experience <em>(optional)</em></legend>
+<p class="fhint">Optional: Share your Challenge Golf experience to help us improve and grow.</p>
+<div class="fg">{fld("In one word or one sentence, how does Challenge Golf make you feel?","ts_feel",req=False,full=True)}
+<label class="rf full"><span>What has Challenge Golf meant to you? <em>(optional)</em></span><textarea name="ts_meaning" rows="4"></textarea></label></div>
+<div class="q"><span>May we share this on our website, social media and at the CG35 gala? <em>(optional)</em></span>{radios("ts_share", [("Yes","Yes"),("No, keep it internal","No, keep it internal")], req=False)}</div>
+<div class="q"><span>How should we credit you? <em>(optional)</em></span>{radios("ts_credit", [("Full name","Full name"),("First name only","First name only"),("Anonymous","Anonymous (e.g. &ldquo;a Challenge Golf volunteer&rdquo;)")], req=False)}</div>
+<div class="fg"><label class="rf full"><span>Is there anything we could do better, or something you'd like us to add? <em>(optional)</em></span><textarea name="ts_feedback" rows="3"></textarea><small>This stays private and is only seen by the Challenge Golf board.</small></label></div>
+</fieldset>
 <fieldset data-show="details"><legend><b>2</b> Your information</legend>
 <div class="fg">{fld("Phone","phone",typ="tel",extra=' autocomplete="tel"')}{fld("Address","address",extra=' autocomplete="street-address"')}
 {fld("City","city",extra=' autocomplete="address-level2"')}{fld("Postal code","postal",extra=' autocomplete="postal-code"')}</div>
