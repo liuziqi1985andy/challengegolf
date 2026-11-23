@@ -97,7 +97,16 @@ window.cgSettings.then(function(d){if(!d||!d.announcements||!d.announcements.len
 })();</script>"""
 
 def page(fname, title, desc, hero, main, extra_head=""):
-    html = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{extra_head}
+    html = f'''<!doctype html><html lang="en"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38YF028WB8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', 'G-38YF028WB8');
+</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">{extra_head}
 <title>{title}</title><meta name="description" content="{desc}"><link rel="icon" href="{LOGO}"><link rel="stylesheet" href="css/style.css?v={VERSION}"></head>
 <body><div class="cgbanner" id="cgbanner" hidden></div><header class="sitehead" id="sitehead">{header(fname)}</header><div class="top">{hero}</div>{SWOOSH}<main id="main">{main}</main>{FOOTER}{VIDEO_JS}{SETTINGS_JS}</body></html>'''
     open(os.path.join(OUT, fname), "w").write(html)
